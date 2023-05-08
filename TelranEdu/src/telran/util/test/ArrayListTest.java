@@ -58,6 +58,11 @@ void setUp() {
 	}
 	@Test
 	void testGetIndex() {
+		//check that method could throw exception - IndexOutOfBoundsException
+		//try to get element by index = size of list, that exactly lead to exception
+		assertThrowsExactly(IndexOutOfBoundsException.class,
+				() -> list.get(list.size()));
+	
 		assertEquals(10, list.get(0));
 	}
 	@Test
