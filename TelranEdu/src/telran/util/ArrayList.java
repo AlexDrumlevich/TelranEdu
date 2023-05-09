@@ -39,6 +39,13 @@ public class ArrayList<T> implements List<T> {
 
 	@Override
 	public void add(int index, T obj) {
+		//throw unchecked exception
+		//index > size (it possible to add element in the last place (index == size))
+		if (index < 0 || index > size) {
+			throw new IndexOutOfBoundsException(index);
+		}
+		//if exception thrown, next code (after throw) doesn`t execute
+		
 		if (size == array.length) {
 			reallocate();
 		}
@@ -49,8 +56,13 @@ public class ArrayList<T> implements List<T> {
 
 	@Override
 	public T remove(int index) {
-		T res = array[index];
+		//throw unchecked exception
+			if (index < 0 || index >= size) {
+				throw new IndexOutOfBoundsException(index);
+			}
+		//if exception thrown, next code (after throw) doesn`t execute
 		
+		T res = array[index];
 		//!!! arraycopy take address of start element to copy (array, index + 1), destination (adress 
 		//where to copy:  array, index (we shift back on one element, so we rewrite that one element)
 		// and size: count of elements (size - index - 1) for ex: we delete index 5, so we need to 
@@ -62,10 +74,11 @@ public class ArrayList<T> implements List<T> {
 
 	@Override
 	public T get(int index) {
-		
+		//throw unchecked exception
 		if (index < 0 || index >= size) {
 			throw new IndexOutOfBoundsException(index);
 		}
+		//if exception thrown, next code (after throw) doesn`t execute 
 		
 		T res = array[index];
 		return res;

@@ -2,6 +2,7 @@ package telran.util.test;
 
 import static org.junit.jupiter.api.Assertions.*;
 import java.lang.reflect.Array;
+import java.lang.reflect.Executable;
 
 import org.junit.jupiter.api.BeforeEach;
 
@@ -30,8 +31,10 @@ void setUp() {
 	assertTrue(list.add(numbers[0]));
 	assertEquals(numbers.length + 1, list.size());
 	}
+	
 	@Test
 	void testAddIndex() {
+		
 		Integer [] expected0_500 = {500, 10, -20, 7, 50, 100, 30};
 		Integer [] expected0_500_3_700 = {500, 10, -20, 700, 7, 50, 100, 30};
 		Integer [] expected0_500_3_700_8_300 = {500, 10, -20, 700, 7, 50, 100, 30, 300};
@@ -42,9 +45,16 @@ void setUp() {
 		list.add(8, 300);
 		runTest(expected0_500_3_700_8_300);
 		
+		//test: add with by index method of type List to throwing OutOfBoundsException 
+		assertThrowsExactly(IndexOutOfBoundsException.class, () -> list.add(list.size() + 1, 0));
+		assertThrowsExactly(IndexOutOfBoundsException.class, () -> list.add(-1, 0));
+		assertDoesNotThrow(() -> list.add(0, 0));
+		assertDoesNotThrow(() -> list.add(list.size(), 0)); //it is possible to add element to the last place
+		
 	}
 	@Test
 	void testRemoveIndex() {
+		
 		Integer [] expectedNo10 = { -20, 7, 50, 100, 30};
 		Integer [] expectedNo10_50 = { -20, 7,  100, 30};
 		Integer [] expectedNo10_50_30 = { -20, 7,  100};
@@ -55,16 +65,24 @@ void setUp() {
 		assertEquals(30, list.remove(3));
 		runTest(expectedNo10_50_30);
 		
+		//test: remove by index method of type List to throwing OutOfBoundsException 
+		assertThrowsExactly(IndexOutOfBoundsException.class, () -> list.remove(list.size()));
+		assertThrowsExactly(IndexOutOfBoundsException.class, () -> list.remove(-1));
+		assertDoesNotThrow(() -> list.remove(0));
+		assertDoesNotThrow(() -> list.remove(list.size() - 1));
+		
 	}
 	@Test
 	void testGetIndex() {
-		//check that method could throw exception - IndexOutOfBoundsException
-		//try to get element by index = size of list, that exactly lead to exception
-		assertThrowsExactly(IndexOutOfBoundsException.class,
-				() -> list.get(list.size()));
-	
+		//test: get method of type List to throwing OutOfBoundsException 
+		assertThrowsExactly(IndexOutOfBoundsException.class, () -> list.get(list.size()));
+		assertThrowsExactly(IndexOutOfBoundsException.class, () -> list.get(-1));
+		assertDoesNotThrow(() -> list.get(0));
+		assertDoesNotThrow(() -> list.get(list.size() - 1));
+		
 		assertEquals(10, list.get(0));
 	}
+	
 	@Test
 	void testRemovePattern() {
 		Integer [] expectedNo10 = { -20, 7, 50, 100, 30};
@@ -207,9 +225,6 @@ void setUp() {
  		assertTrue(list.removeIf(a -> true));
  		assertEquals(0, list.size());
  	}
-	
-	
- 	
 	
 	
 	private void runTest(Integer[] expected) {
