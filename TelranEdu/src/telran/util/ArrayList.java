@@ -116,6 +116,7 @@ public class ArrayList<T> implements List<T> {
 
 	@Override
 	public int indexOf(T pattern) {
+		/*
 		int res = -1;
 		int index = 0;
 		while (index < size && res == -1) {
@@ -125,6 +126,8 @@ public class ArrayList<T> implements List<T> {
 			index++;
 		}
 		return res;
+		*/
+		return indexOf((obj) -> isEqual(obj, pattern));
 	}
 
 	private boolean isEqual(T object, T pattern) {

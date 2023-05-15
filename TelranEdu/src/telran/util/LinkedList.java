@@ -138,41 +138,24 @@ public class LinkedList<T> implements List<T> {
 
 	@Override
 	public int indexOf(T pattern) {
-		int result = -1;
-		if (size > 0) {
-			result = getFirstIndexByPattern(pattern);
-		}
-		return result;
+		return getFirstIndexByPattern(pattern);
 	}
 
 	@Override
 	public int lastIndexOf(T pattern) {
-		int result = -1;
-		if (size > 0) {
-			result = getLastIndexByPattern(pattern);
-		}
-		return result;
+		return getLastIndexByPattern(pattern);
 	}
 
 	
 	@Override
 	public int indexOf(Predicate<T> predicate) {
-		int result = -1;
-		if (size > 0) {
-			result = getFirstIndexByPredicate(predicate);
-		}
-		return result;
+		return getFirstIndexByPredicate(predicate);
 	}
 
 	@Override
 	public int lastIndexOf(Predicate<T> predicate) {
-		int result = -1;
-		if (size > 0) {
-			result = getLastIndexByPredicate(predicate);
-		}
-		return result;
+		return getLastIndexByPredicate(predicate);
 	}
-	
 	
 	//SORT
 	
@@ -255,35 +238,15 @@ public class LinkedList<T> implements List<T> {
 	//Pattern -> first index 
 	//return -1 if not such index
 	private int getFirstIndexByPattern(T pattern) {
-		int index = -1;
-		//start from head
-		Node<T> currentNode = head;
-		//WHILE index is not found OR passing throw all the nodes
-		for(int i = 0;  currentNode != null && index == -1; i++) {
-			if(currentNode.obj.equals(pattern)) {
-				//if object in current node equals pattern, set index, for cycle will be break 
-				index = i;
-			} else {
-				currentNode = currentNode.next;
-			}
-		}
-		return index;
+		//isEqual check pattern to null, if pattern is null, isEqual is able to find object, witch is also null 
+		return getFirstIndexByPredicate((obj) -> isEqual(obj, pattern));
 	}
 	
-	//Pattern -> last index 
+	//Pattern -> last index
 	//return -1 if not such index
 	private int getLastIndexByPattern(T pattern) {
-		int index = -1;
-		//start from tail
-		Node<T> currentNode = tail;
-		for(int i = size - 1;  currentNode != null && index == -1; i--) {
-			if(currentNode.obj.equals(pattern)) {
-				index = i;
-			} else {
-				currentNode = currentNode.prev;
-			}
-		}
-		return index;
+		//isEqual check pattern to null, if pattern is null, isEqual is able to find object, witch is also null  
+		return getLastIndexByPredicate((obj) -> isEqual(obj, pattern));
 	}
 	
 	//Pattern -> first node 
@@ -333,7 +296,7 @@ public class LinkedList<T> implements List<T> {
 	
 	//Predicate -> first node 
 	//used to remove first node by predicate
-	/*
+	
 	private Node<T> getFirstNodeByPredicate(Predicate<T> predicate) {
 		Node<T> resultNode = null;
 		Node<T> currentNode = head;
@@ -346,8 +309,15 @@ public class LinkedList<T> implements List<T> {
 		}
 		return resultNode;
 	}
-	*/
 	
+	//or we can use get by predicate:
+	private Node<T> getFirstNodeByPattern(T pattern) {
+		return getFirstNodeByPredicate(a -> isEqual(a, pattern));
+	}
+	
+	private boolean isEqual(T object, T pattern) {
+		return pattern == null ? object == pattern : pattern.equals(object);
+	}
 	
 	//REMOVE support
 	
