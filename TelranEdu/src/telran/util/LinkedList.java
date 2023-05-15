@@ -4,11 +4,13 @@ import static org.junit.Assert.assertNotNull;
 
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
 
 import javax.naming.spi.DirStateFactory.Result;
 import javax.swing.plaf.nimbus.NimbusLookAndFeel;
+import javax.swing.text.TabableView;
 import javax.swing.text.AbstractDocument.LeafElement;
 
 public class LinkedList<T> implements List<T> {
@@ -159,16 +161,37 @@ public class LinkedList<T> implements List<T> {
 	
 	//SORT
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public void sort() {
-		// no implement
+		sort((Comparator<T>) Comparator.naturalOrder());
 	}
 
 	@Override
 	public void sort(Comparator<T> comp) {
-		// no implement
+		//1. call the method toArray
+		//2. By applying Arrays.sort you sort the array from #1
+		//3. Passing over all LinkedList nodes and setting references to objects (T)
+		// in the appropriate order from #2
+		
+		//1
+		ArrayList<T> arrayListT = new ArrayList<>();
+		Node<T> current = head;
+		while(current != null) {
+			arrayListT.add(current.obj);
+			current = current.next;
+		}
+		
+		//2
+		arrayListT.sort(comp);
+		
+		//3
+		current = head;
+		for(int i = 0; current != null; i++) {
+			current.obj = arrayListT.get(i);
+			current = current.next;
+		}	
 	}	
-	
 		
 					//SUPPORT
 	
