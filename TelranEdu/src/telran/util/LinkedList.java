@@ -175,20 +175,15 @@ public class LinkedList<T> implements List<T> {
 		// in the appropriate order from #2
 		
 		//1
-		ArrayList<T> arrayListT = new ArrayList<>();
-		Node<T> current = head;
-		while(current != null) {
-			arrayListT.add(current.obj);
-			current = current.next;
-		}
+		T[] arrayT =  toArray((T[]) new Object[0]);
 		
 		//2
-		arrayListT.sort(comp);
+		Arrays.sort(arrayT, comp);
 		
 		//3
-		current = head;
+		Node<T> current = head;
 		for(int i = 0; current != null; i++) {
-			current.obj = arrayListT.get(i);
+			current.obj = arrayT[i];
 			current = current.next;
 		}	
 	}	
