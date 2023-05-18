@@ -45,24 +45,28 @@ public class LinkedList<T> implements List<T> {
 	
 	//REMOVE
 	
+	//in List.java
+	/*
 	@Override
 	public boolean remove(T pattern) {
 		boolean result = false;
 		if(size > 0) {
+			
 			//remove first relevant to pattern
-			/*
-			Node<T> nodeToRemove = getFirstNodeByPattern(pattern);
-			if(nodeToRemove != null) {
-				removeNode(nodeToRemove);
-				result = true;
-			}
-			*/
+			//
+			//Node<T> nodeToRemove = getFirstNodeByPattern(pattern);
+			//if(nodeToRemove != null) {
+			//	removeNode(nodeToRemove);
+			//	result = true;
+			//}
+
 
 			//remove all relevant to pattern
 			result = removeAllBy(pattern);
 		}
 		return result;
 	}
+	*/
 	
 	@Override
 	public T remove(int index) {
@@ -98,7 +102,8 @@ public class LinkedList<T> implements List<T> {
 	}
 
 	
-	//TO ARRAY
+	//TO ARRAY - in List
+	/*
 	@Override
 	public T[] toArray(T[] ar) {
 		if (ar.length < size) {
@@ -115,6 +120,7 @@ public class LinkedList<T> implements List<T> {
 		}
 		return ar;
 	}
+	*/
 
 	
 	//ADD
@@ -333,10 +339,6 @@ public class LinkedList<T> implements List<T> {
 		return getFirstNodeByPredicate(a -> isEqual(a, pattern));
 	}
 	
-	private boolean isEqual(T object, T pattern) {
-		return pattern == null ? object == pattern : pattern.equals(object);
-	}
-	
 	//REMOVE support
 	
 	//Pattern - remove all relevant
@@ -401,6 +403,31 @@ public class LinkedList<T> implements List<T> {
 		nodeForRemove.next.prev = nodeForRemove.prev;
 		size --;
 	}
+
 	
+	
+	//Iterable
+
+	private class LinkedListIterator implements Iterator<T> {
+
+		@Override
+		public boolean hasNext() {
+			// TODO Auto-generated method stub
+			return false;
+		}
+
+		@Override
+		public T next() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+	}
+
+	@Override
+	public Iterator<T> iterator() {
+		return new LinkedListIterator();
+	}
+
 	
 }

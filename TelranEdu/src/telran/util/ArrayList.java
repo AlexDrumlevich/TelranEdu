@@ -2,6 +2,7 @@ package telran.util;
 
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.function.Predicate;
 
 import javax.swing.plaf.synth.SynthUI;
@@ -101,6 +102,8 @@ public class ArrayList<T> implements List<T> {
 		return res;
 	}
 
+	//To Array - in List.java
+	/*
 	@Override
 	public T[] toArray(T[] ar) {
 		if (ar.length < size) {
@@ -113,6 +116,7 @@ public class ArrayList<T> implements List<T> {
 
 		return ar;
 	}
+	*/
 
 	@Override
 	public int indexOf(T pattern) {
@@ -130,11 +134,6 @@ public class ArrayList<T> implements List<T> {
 		return indexOf((obj) -> isEqual(obj, pattern));
 	}
 
-	private boolean isEqual(T object, T pattern) {
-
-		return pattern == null ? object == pattern : pattern.equals(object);
-	}
-
 	@Override
 	public int lastIndexOf(T pattern) {
 		int res = -1;
@@ -147,8 +146,6 @@ public class ArrayList<T> implements List<T> {
 		}
 		return res;
 	}
-
-
 
 	//SORT
 	//STANDART SORT
@@ -319,6 +316,31 @@ public class ArrayList<T> implements List<T> {
 		
 		return startSize != size;
 	}
+	
+	
+	
+	//iterable
+	private class ArrayListIterator implements Iterator<T> {
+
+		@Override
+		public boolean hasNext() {
+			// TODO Auto-generated method stub
+			return false;
+		}
+
+		@Override
+		public T next() {
+			// TODO Auto-generated method stub
+			return null;
+			
+		}
+	}
+
+	@Override
+	public Iterator<T> iterator() {
+		return new ArrayListIterator();
+	}
+	
 	
 	
 }
