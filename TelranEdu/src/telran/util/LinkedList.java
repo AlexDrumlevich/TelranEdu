@@ -5,6 +5,7 @@ import static org.junit.Assert.assertNotNull;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
 
@@ -27,31 +28,31 @@ public class LinkedList<T> implements List<T> {
 	}
 
 	//ADD
-	
+
 	@Override
 	public boolean add(T obj) {
 		add(size, obj);
 		return true;
 	}
 
-	
+
 	//SIZE
 	@Override
 	public int size() {
-		
+
 		return size;
 	}
 
-	
+
 	//REMOVE
-	
+
 	//in List.java
 	/*
 	@Override
 	public boolean remove(T pattern) {
 		boolean result = false;
 		if(size > 0) {
-			
+
 			//remove first relevant to pattern
 			//
 			//Node<T> nodeToRemove = getFirstNodeByPattern(pattern);
@@ -66,8 +67,8 @@ public class LinkedList<T> implements List<T> {
 		}
 		return result;
 	}
-	*/
-	
+	 */
+
 	@Override
 	public T remove(int index) {
 		//check to index out of bounds
@@ -82,7 +83,7 @@ public class LinkedList<T> implements List<T> {
 		return nodeToRemove.obj;
 	}
 
-	
+
 	@Override
 	public boolean removeIf(Predicate<T> predicate) {
 		boolean result = false;
@@ -101,7 +102,7 @@ public class LinkedList<T> implements List<T> {
 		return result;
 	}
 
-	
+
 	//TO ARRAY - in List
 	/*
 	@Override
@@ -120,9 +121,9 @@ public class LinkedList<T> implements List<T> {
 		}
 		return ar;
 	}
-	*/
+	 */
 
-	
+
 	//ADD
 	@Override
 	public void add(int index, T obj) {
@@ -135,7 +136,7 @@ public class LinkedList<T> implements List<T> {
 
 
 	//GET
-	
+
 	@Override
 	public T get(int index) {
 		if (index < 0 || index >= size) {
@@ -154,7 +155,7 @@ public class LinkedList<T> implements List<T> {
 		return getLastIndexByPattern(pattern);
 	}
 
-	
+
 	@Override
 	public int indexOf(Predicate<T> predicate) {
 		return getFirstIndexByPredicate(predicate);
@@ -164,9 +165,9 @@ public class LinkedList<T> implements List<T> {
 	public int lastIndexOf(Predicate<T> predicate) {
 		return getLastIndexByPredicate(predicate);
 	}
-	
+
 	//SORT
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public void sort() {
@@ -179,13 +180,13 @@ public class LinkedList<T> implements List<T> {
 		//2. By applying Arrays.sort you sort the array from #1
 		//3. Passing over all LinkedList nodes and setting references to objects (T)
 		// in the appropriate order from #2
-		
+
 		//1
 		T[] arrayT =  toArray((T[]) new Object[0]);
-		
+
 		//2
 		Arrays.sort(arrayT, comp);
-		
+
 		//3
 		Node<T> current = head;
 		for(int i = 0; current != null; i++) {
@@ -193,12 +194,12 @@ public class LinkedList<T> implements List<T> {
 			current = current.next;
 		}	
 	}	
-		
-					//SUPPORT
-	
-	
+
+	//SUPPORT
+
+
 	//ADD support
-	
+
 	private void addNode(int index, Node<T> node) {
 		if (head == null) {
 			head = tail = node;
@@ -213,19 +214,19 @@ public class LinkedList<T> implements List<T> {
 		}
 		size++;
 	}
-	
+
 	private void addNodeHead(Node<T> node) {
 		node.next = head;
 		head.prev = node;
 		head = node;
 	}
-	
+
 	private void addNodeTail(Node<T> node) {
 		node.prev = tail;
 		tail.next = node;
 		tail = node;
 	}
-	
+
 	private void addNodeMiddle(int index, Node<T> node) {
 		Node<T> nodeA = getNode(index);
 		Node<T> nodeBefore = nodeA.prev;
@@ -235,14 +236,14 @@ public class LinkedList<T> implements List<T> {
 		nodeA.prev = node;
 	}
 
-	
+
 	//GET support
-	
+
 	private Node<T> getNode(int index) {	
 		return index > size / 2 ? getNodeFromRight(index) :
 			getNodeFromLeft(index);
 	}
-	
+
 	private Node<T> getNodeFromLeft(int index) {
 		Node<T> current = head;
 		for(int i = 0; i < index; i++) {
@@ -258,21 +259,21 @@ public class LinkedList<T> implements List<T> {
 		}
 		return current;
 	}
-	
+
 	//Pattern -> first index 
 	//return -1 if not such index
 	private int getFirstIndexByPattern(T pattern) {
 		//isEqual check pattern to null, if pattern is null, isEqual is able to find object, witch is also null 
 		return getFirstIndexByPredicate((obj) -> isEqual(obj, pattern));
 	}
-	
+
 	//Pattern -> last index
 	//return -1 if not such index
 	private int getLastIndexByPattern(T pattern) {
 		//isEqual check pattern to null, if pattern is null, isEqual is able to find object, witch is also null  
 		return getLastIndexByPredicate((obj) -> isEqual(obj, pattern));
 	}
-	
+
 	//Pattern -> first node 
 	//used to remove first node by pattern
 	/*
@@ -288,8 +289,8 @@ public class LinkedList<T> implements List<T> {
 		}
 		return resultNode;
 	}
-	*/
-	
+	 */
+
 	//Predicate -> first index 
 	private int getFirstIndexByPredicate(Predicate<T> predicate) {
 		int index = -1;
@@ -303,7 +304,7 @@ public class LinkedList<T> implements List<T> {
 		}
 		return index;
 	}
-	
+
 	//Predicate -> last index 
 	private int getLastIndexByPredicate(Predicate<T> predicate) {
 		int index = -1;
@@ -317,10 +318,10 @@ public class LinkedList<T> implements List<T> {
 		}
 		return index;
 	}
-	
+
 	//Predicate -> first node 
 	//used to remove first node by predicate
-	
+
 	private Node<T> getFirstNodeByPredicate(Predicate<T> predicate) {
 		Node<T> resultNode = null;
 		Node<T> currentNode = head;
@@ -333,14 +334,14 @@ public class LinkedList<T> implements List<T> {
 		}
 		return resultNode;
 	}
-	
+
 	//or we can use get by predicate:
 	private Node<T> getFirstNodeByPattern(T pattern) {
 		return getFirstNodeByPredicate(a -> isEqual(a, pattern));
 	}
-	
+
 	//REMOVE support
-	
+
 	//Pattern - remove all relevant
 	private boolean removeAllBy(T pattern) {
 		int startSize = size;
@@ -353,7 +354,7 @@ public class LinkedList<T> implements List<T> {
 		}
 		return size < startSize;
 	}
-	
+
 	//Predicate - remove all relevant
 	private boolean removeAllBy(Predicate<T> predicate) {
 		int startSize = size;
@@ -366,7 +367,7 @@ public class LinkedList<T> implements List<T> {
 		}
 		return size < startSize;
 	}
-	
+
 	//removing manager
 	private void removeNode(Node<T> node) {
 		if(node == head && node == tail) {
@@ -379,55 +380,60 @@ public class LinkedList<T> implements List<T> {
 			removeMiddle(node);
 		}
 	}
-	
+
 	private void removeSingle() {
 		head = null;
 		tail = null;
 		size --;
 	}
-	
+
 	private void removeHead() {
 		head = head.next;
 		head.prev = null;
 		size --;
 	}
-	
+
 	private void removeTail() {
 		tail = tail.prev;
 		tail.next = null;
 		size --;
 	}
-	
+
 	private void removeMiddle(Node<T> nodeForRemove) {
 		nodeForRemove.prev.next = nodeForRemove.next;
 		nodeForRemove.next.prev = nodeForRemove.prev;
 		size --;
 	}
 
-	
-	
-	//Iterable
+
+
+	//Iterator
 
 	private class LinkedListIterator implements Iterator<T> {
-
+		//returns and check current node, after return current gets next
+		
+		Node<T> current = head;
+  
 		@Override
 		public boolean hasNext() {
-			// TODO Auto-generated method stub
-			return false;
+			return current != null;
 		}
-
+		
 		@Override
 		public T next() {
-			// TODO Auto-generated method stub
-			return null;
+			if(!hasNext()) {
+				throw new NoSuchElementException();
+			}
+			try {
+				return current.obj;
+			} finally {
+				current = current.next;
+			}		
 		}
-
 	}
 
 	@Override
 	public Iterator<T> iterator() {
 		return new LinkedListIterator();
 	}
-
-	
 }

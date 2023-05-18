@@ -1,10 +1,15 @@
 package telran.util.test;
 
+
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -99,6 +104,24 @@ public abstract class CollectionTest {
 		*/
 		Integer [] actual = collection.toArray(new Integer[0]);
 		assertArrayEquals(expected, actual);
+	}
+
+	@Test
+	void iteratorTest() {
+		Iterator<Integer> iterator = collection.iterator();
+		Integer[] array = collection.toArray(new Integer[0]);
+		for(int i = 0; i < array.length; i ++) {
+			assertTrue(iterator.hasNext());
+			assertTrue(iterator.next().equals(array[i]));
+		}
+		assertFalse(iterator.hasNext());
+		assertThrows(NoSuchElementException.class, () -> iterator.next());
+
+		//try collection with 0 elements
+		collection.removeIf(a -> true);
+		Iterator<Integer> iterator2 = collection.iterator();
+		assertFalse(iterator2.hasNext());
+		assertThrows(NoSuchElementException.class, () -> iterator2.next());	
 	}
 	
 }

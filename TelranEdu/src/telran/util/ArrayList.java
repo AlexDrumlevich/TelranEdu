@@ -3,6 +3,7 @@ package telran.util;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 import java.util.function.Predicate;
 
 import javax.swing.plaf.synth.SynthUI;
@@ -10,7 +11,7 @@ import javax.swing.plaf.synth.SynthUI;
 public class ArrayList<T> implements List<T> {
 	private static final int DEFAULT_CAPACITY = 16;
 	private T[] array;
-	
+
 	//count of elements in array (!!!Not array length)
 	private int size;
 
@@ -46,7 +47,7 @@ public class ArrayList<T> implements List<T> {
 			throw new IndexOutOfBoundsException(index);
 		}
 		//if exception thrown, next code (after throw) doesn`t execute
-		
+
 		if (size == array.length) {
 			reallocate();
 		}
@@ -58,11 +59,11 @@ public class ArrayList<T> implements List<T> {
 	@Override
 	public T remove(int index) {
 		//throw unchecked exception
-			if (index < 0 || index >= size) {
-				throw new IndexOutOfBoundsException(index);
-			}
+		if (index < 0 || index >= size) {
+			throw new IndexOutOfBoundsException(index);
+		}
 		//if exception thrown, next code (after throw) doesn`t execute
-		
+
 		T res = array[index];
 		//!!! arraycopy take address of start element to copy (array, index + 1), destination (adress 
 		//where to copy:  array, index (we shift back on one element, so we rewrite that one element)
@@ -80,7 +81,7 @@ public class ArrayList<T> implements List<T> {
 			throw new IndexOutOfBoundsException(index);
 		}
 		//if exception thrown, next code (after throw) doesn`t execute 
-		
+
 		T res = array[index];
 		return res;
 	}
@@ -116,7 +117,7 @@ public class ArrayList<T> implements List<T> {
 
 		return ar;
 	}
-	*/
+	 */
 
 	@Override
 	public int indexOf(T pattern) {
@@ -130,7 +131,7 @@ public class ArrayList<T> implements List<T> {
 			index++;
 		}
 		return res;
-		*/
+		 */
 		return indexOf((obj) -> isEqual(obj, pattern));
 	}
 
@@ -267,7 +268,7 @@ public class ArrayList<T> implements List<T> {
 	}
 
 	//remove all elements that satisfies to condition gets in Predicate
-	
+
 	//!!! Not do do like that for(int i = 1; i < 0; i++) { if predicate {i++} ...}
 	public boolean removeIf(Predicate<T> predicate) {
 		int startSize = size;
@@ -277,7 +278,7 @@ public class ArrayList<T> implements List<T> {
 				remove(i);
 			}
 		}
-		
+
 		//or using while:
 		/*
 		 int i = 0;
@@ -290,13 +291,13 @@ public class ArrayList<T> implements List<T> {
 		 	}
 		 }
 		 */
-		
+
 		return startSize != size;
 	}
-	
-	
-	
-	
+
+
+
+
 	//remove all elements that satisfies to condition gets in Predicate
 	//much better way 
 	public boolean removeIfAnotherWay(Predicate<T> predicate) {
@@ -313,26 +314,28 @@ public class ArrayList<T> implements List<T> {
 		}
 		//in the end we just set size where elements witch we shouldn`t delete 
 		size = index;
-		
+
 		return startSize != size;
 	}
-	
-	
-	
-	//iterable
+
+
+	//iterator
 	private class ArrayListIterator implements Iterator<T> {
+		//returns element by current index, after return current increases
+
+		int current = 0;
 
 		@Override
 		public boolean hasNext() {
-			// TODO Auto-generated method stub
-			return false;
+			return current < size();
 		}
 
 		@Override
 		public T next() {
-			// TODO Auto-generated method stub
-			return null;
-			
+			if(!hasNext()) {
+				throw new NoSuchElementException();
+			}
+			return get(current++); 
 		}
 	}
 
@@ -340,9 +343,7 @@ public class ArrayList<T> implements List<T> {
 	public Iterator<T> iterator() {
 		return new ArrayListIterator();
 	}
-	
-	
-	
+
 }
 
 

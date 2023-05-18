@@ -14,5 +14,6 @@ public interface Collection<T> extends Iterable<T> {
 	default  boolean isEqual(T object, T pattern) {
 		return pattern == null ? object == pattern : pattern.equals(object);
 	}
+	
 }
 
