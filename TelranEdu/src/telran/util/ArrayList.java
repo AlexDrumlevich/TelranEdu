@@ -1,5 +1,6 @@
 package telran.util;
 
+import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Iterator;
@@ -36,7 +37,6 @@ public class ArrayList<T> implements List<T> {
 
 	private void reallocate() {
 		array = Arrays.copyOf(array, array.length * 2);
-
 	}
 
 	@Override
@@ -81,71 +81,13 @@ public class ArrayList<T> implements List<T> {
 			throw new IndexOutOfBoundsException(index);
 		}
 		//if exception thrown, next code (after throw) doesn`t execute 
-
 		T res = array[index];
 		return res;
 	}
 
 	@Override
 	public int size() {
-
 		return size;
-	}
-
-	@Override
-	public boolean remove(T pattern) {
-		boolean res = false;
-		int index = indexOf(pattern);
-		if (index > -1) {
-			res = true;
-			remove(index);
-		}
-		return res;
-	}
-
-	//To Array - in List.java
-	/*
-	@Override
-	public T[] toArray(T[] ar) {
-		if (ar.length < size) {
-			ar = Arrays.copyOf(ar, size);
-		}
-		System.arraycopy(array, 0, ar, 0, size);
-		if (ar.length > size) {
-			ar[size] = null;
-		}
-
-		return ar;
-	}
-	 */
-
-	@Override
-	public int indexOf(T pattern) {
-		/*
-		int res = -1;
-		int index = 0;
-		while (index < size && res == -1) {
-			if (isEqual(array[index], pattern)) {
-				res = index;
-			}
-			index++;
-		}
-		return res;
-		 */
-		return indexOf((obj) -> isEqual(obj, pattern));
-	}
-
-	@Override
-	public int lastIndexOf(T pattern) {
-		int res = -1;
-		int index = size - 1;
-		while (index >= 0 && res == -1) {
-			if (isEqual(array[index], pattern)) {
-				res = index;
-			}
-			index--;
-		}
-		return res;
 	}
 
 	//SORT
@@ -233,7 +175,7 @@ public class ArrayList<T> implements List<T> {
 	}
 
 
-	//PREDICATE
+	//GET
 
 	//return index of first satisfaction to condition gets in Predicate
 	public int indexOf(Predicate<T> predicate) {
@@ -267,40 +209,10 @@ public class ArrayList<T> implements List<T> {
 		return res;
 	}
 
+	//REMOVE
 	//remove all elements that satisfies to condition gets in Predicate
-
-	//!!! Not do do like that for(int i = 1; i < 0; i++) { if predicate {i++} ...}
+	@Override
 	public boolean removeIf(Predicate<T> predicate) {
-		int startSize = size;
-		for(int i = size - 1; i >= 0; i--) {
-			if(predicate.test(array[i])) {
-				//!!! using remove takes much time (each time it copies)
-				remove(i);
-			}
-		}
-
-		//or using while:
-		/*
-		 int i = 0;
-		 while(i < size) {
-		 	if(predicate.test(array[i])) {
-		 		remove(i);
-		 		//here we not increment i because of array indexes shifting
-		 	} else {
-		 		i ++;
-		 	}
-		 }
-		 */
-
-		return startSize != size;
-	}
-
-
-
-
-	//remove all elements that satisfies to condition gets in Predicate
-	//much better way 
-	public boolean removeIfAnotherWay(Predicate<T> predicate) {
 		int startSize = size;
 		int index = 0;
 		for(int i = 0; i < startSize; i++) {
@@ -308,26 +220,34 @@ public class ArrayList<T> implements List<T> {
 			//as a result we get from the beginning elements witch we shouldn`t delete and in the end
 			//elements witch should be deleted 
 			if(!predicate.test(array[i])) {
-				//
 				array[index++] = array[i];
+				//get rid of extra link
+				if(i != index - 1) {
+					array[i] = null;
+				}
+			} else {
+				//get rid of extra link
+				array[i] = null;
 			}
 		}
 		//in the end we just set size where elements witch we shouldn`t delete 
-		size = index;
-
+		size = index;		
 		return startSize != size;
 	}
 
 
-	//iterator
+	//ITERATOR
+	
 	private class ArrayListIterator implements Iterator<T> {
 		//returns element by current index, after return current increases
 
-		int current = 0;
-
+		int currentIndex = 0;
+		//next() -> set true; remove() -> set false
+		boolean flNext = false;
+		
 		@Override
 		public boolean hasNext() {
-			return current < size();
+			return currentIndex < size;
 		}
 
 		@Override
@@ -335,7 +255,18 @@ public class ArrayList<T> implements List<T> {
 			if(!hasNext()) {
 				throw new NoSuchElementException();
 			}
-			return get(current++); 
+			return get(currentIndex++); 
+		}
+		
+		@Override
+		public void remove() {
+			//flNext == false, if there was not any next() before calling remove();
+			if(!flNext) {
+				throw new IllegalStateException();
+			}
+			//Method of ArrayList
+			ArrayList.this.remove(--currentIndex);
+			flNext = false;
 		}
 	}
 

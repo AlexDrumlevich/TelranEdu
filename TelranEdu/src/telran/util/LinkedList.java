@@ -1,18 +1,10 @@
 package telran.util;
 
-import static org.junit.Assert.assertNotNull;
-
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.function.Predicate;
-import java.util.regex.Pattern;
-
-import javax.naming.spi.DirStateFactory.Result;
-import javax.swing.plaf.nimbus.NimbusLookAndFeel;
-import javax.swing.text.TabableView;
-import javax.swing.text.AbstractDocument.LeafElement;
 
 public class LinkedList<T> implements List<T> {
 	Node<T> head;
@@ -39,35 +31,11 @@ public class LinkedList<T> implements List<T> {
 	//SIZE
 	@Override
 	public int size() {
-
 		return size;
 	}
 
 
 	//REMOVE
-
-	//in List.java
-	/*
-	@Override
-	public boolean remove(T pattern) {
-		boolean result = false;
-		if(size > 0) {
-
-			//remove first relevant to pattern
-			//
-			//Node<T> nodeToRemove = getFirstNodeByPattern(pattern);
-			//if(nodeToRemove != null) {
-			//	removeNode(nodeToRemove);
-			//	result = true;
-			//}
-
-
-			//remove all relevant to pattern
-			result = removeAllBy(pattern);
-		}
-		return result;
-	}
-	 */
 
 	@Override
 	public T remove(int index) {
@@ -82,49 +50,9 @@ public class LinkedList<T> implements List<T> {
 		//return object T
 		return nodeToRemove.obj;
 	}
-
-
-	@Override
-	public boolean removeIf(Predicate<T> predicate) {
-		boolean result = false;
-		if(size > 0) {
-			//remove first relevant to predicate
-			/*
-			Node<T> nodeToRemove = getFirstNodeByPredicate(predicate);
-			if(nodeToRemove != null) {
-				removeNode(nodeToRemove);
-				result = true;
-			 */
-
-			//remove all relevant to predicate
-			result = removeAllBy(predicate);
-		}
-		return result;
-	}
-
-
-	//TO ARRAY - in List
-	/*
-	@Override
-	public T[] toArray(T[] ar) {
-		if (ar.length < size) {
-			ar = Arrays.copyOf(ar, size);
-		}
-		Node<T> current = head;
-		int index = 0;
-		while(current != null) {
-			ar[index++] = current.obj;
-			current = current.next;
-		}
-		if (ar.length > size) {
-			ar[size] = null;
-		}
-		return ar;
-	}
-	 */
-
-
+	
 	//ADD
+	
 	@Override
 	public void add(int index, T obj) {
 		if (index < 0 || index > size) {
@@ -144,17 +72,6 @@ public class LinkedList<T> implements List<T> {
 		}
 		return getNode(index).obj;
 	}
-
-	@Override
-	public int indexOf(T pattern) {
-		return getFirstIndexByPattern(pattern);
-	}
-
-	@Override
-	public int lastIndexOf(T pattern) {
-		return getLastIndexByPattern(pattern);
-	}
-
 
 	@Override
 	public int indexOf(Predicate<T> predicate) {
@@ -196,7 +113,6 @@ public class LinkedList<T> implements List<T> {
 	}	
 
 	//SUPPORT
-
 
 	//ADD support
 
@@ -260,37 +176,6 @@ public class LinkedList<T> implements List<T> {
 		return current;
 	}
 
-	//Pattern -> first index 
-	//return -1 if not such index
-	private int getFirstIndexByPattern(T pattern) {
-		//isEqual check pattern to null, if pattern is null, isEqual is able to find object, witch is also null 
-		return getFirstIndexByPredicate((obj) -> isEqual(obj, pattern));
-	}
-
-	//Pattern -> last index
-	//return -1 if not such index
-	private int getLastIndexByPattern(T pattern) {
-		//isEqual check pattern to null, if pattern is null, isEqual is able to find object, witch is also null  
-		return getLastIndexByPredicate((obj) -> isEqual(obj, pattern));
-	}
-
-	//Pattern -> first node 
-	//used to remove first node by pattern
-	/*
-	private Node<T> getFirstNodeByPattern(T pattern) {
-		Node<T> resultNode = null;
-		Node<T> currentNode = head;
-		while(resultNode == null && currentNode != null) {
-			if(currentNode.obj.equals(pattern)) {
-				resultNode = currentNode;
-			} else {
-				currentNode = currentNode.next;
-			}
-		}
-		return resultNode;
-	}
-	 */
-
 	//Predicate -> first index 
 	private int getFirstIndexByPredicate(Predicate<T> predicate) {
 		int index = -1;
@@ -317,55 +202,6 @@ public class LinkedList<T> implements List<T> {
 			}
 		}
 		return index;
-	}
-
-	//Predicate -> first node 
-	//used to remove first node by predicate
-
-	private Node<T> getFirstNodeByPredicate(Predicate<T> predicate) {
-		Node<T> resultNode = null;
-		Node<T> currentNode = head;
-		while(resultNode == null && currentNode != null) {
-			if(predicate.test(currentNode.obj)) {
-				resultNode = currentNode;
-			} else {
-				currentNode = currentNode.next;
-			}
-		}
-		return resultNode;
-	}
-
-	//or we can use get by predicate:
-	private Node<T> getFirstNodeByPattern(T pattern) {
-		return getFirstNodeByPredicate(a -> isEqual(a, pattern));
-	}
-
-	//REMOVE support
-
-	//Pattern - remove all relevant
-	private boolean removeAllBy(T pattern) {
-		int startSize = size;
-		Node<T> currentNode = head;
-		while(currentNode != null) {
-			if(currentNode.obj.equals(pattern)) {
-				removeNode(currentNode);
-			}
-			currentNode = currentNode.next;
-		}
-		return size < startSize;
-	}
-
-	//Predicate - remove all relevant
-	private boolean removeAllBy(Predicate<T> predicate) {
-		int startSize = size;
-		Node<T> currentNode = head;
-		while(currentNode != null) {
-			if(predicate.test(currentNode.obj)) {
-				removeNode(currentNode);
-			}
-			currentNode = currentNode.next;
-		}
-		return size < startSize;
 	}
 
 	//removing manager
@@ -412,6 +248,8 @@ public class LinkedList<T> implements List<T> {
 	private class LinkedListIterator implements Iterator<T> {
 		//returns and check current node, after return current gets next
 		
+		//next() -> set true; remove() -> set false
+		boolean flNext = false;
 		Node<T> current = head;
   
 		@Override
@@ -424,11 +262,20 @@ public class LinkedList<T> implements List<T> {
 			if(!hasNext()) {
 				throw new NoSuchElementException();
 			}
-			try {
-				return current.obj;
-			} finally {
-				current = current.next;
-			}		
+			T object = current.obj;
+			current = current.next;
+			flNext = true;
+			return object;	
+		}
+		
+		@Override
+		public void remove() {
+			if (!flNext) {
+				throw new IllegalStateException();
+			}
+			Node<T> removedNode = current != null ? current.prev : tail;
+			removeNode(removedNode);
+			flNext = false;
 		}
 	}
 
@@ -436,4 +283,5 @@ public class LinkedList<T> implements List<T> {
 	public Iterator<T> iterator() {
 		return new LinkedListIterator();
 	}
+
 }
