@@ -164,5 +164,14 @@ abstract class ListTest extends CollectionTest {
 		}
 		return res;
 	}
+	
+	@Test
+	void clearPerformance() {
+		List<Integer> bigList = getList();
+		for(int i = 0; i < 1_000_000; i++) {
+			bigList.add(i);
+		}
+		bigList.clear();
+	}
 
 }

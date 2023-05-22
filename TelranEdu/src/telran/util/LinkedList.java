@@ -90,7 +90,8 @@ public class LinkedList<T> implements List<T> {
 	public void sort() {
 		sort((Comparator<T>) Comparator.naturalOrder());
 	}
-
+	
+	@SuppressWarnings("unchecked")
 	@Override
 	public void sort(Comparator<T> comp) {
 		//1. call the method toArray

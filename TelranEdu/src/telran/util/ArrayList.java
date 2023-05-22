@@ -209,32 +209,9 @@ public class ArrayList<T> implements List<T> {
 		return res;
 	}
 
-	//REMOVE
-	//remove all elements that satisfies to condition gets in Predicate
-	@Override
-	public boolean removeIf(Predicate<T> predicate) {
-		int startSize = size;
-		int index = 0;
-		for(int i = 0; i < startSize; i++) {
-			//if we don`t need to remove, we will add it in the beginning
-			//as a result we get from the beginning elements witch we shouldn`t delete and in the end
-			//elements witch should be deleted 
-			if(!predicate.test(array[i])) {
-				array[index++] = array[i];
-				//get rid of extra link
-				if(i != index - 1) {
-					array[i] = null;
-				}
-			} else {
-				//get rid of extra link
-				array[i] = null;
-			}
-		}
-		//in the end we just set size where elements witch we shouldn`t delete 
-		size = index;		
-		return startSize != size;
-	}
 
+
+	
 
 	//ITERATOR
 	
