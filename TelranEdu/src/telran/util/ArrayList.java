@@ -255,6 +255,7 @@ public class ArrayList<T> implements List<T> {
 			if(!hasNext()) {
 				throw new NoSuchElementException();
 			}
+			flNext = true;
 			return get(currentIndex++); 
 		}
 		
