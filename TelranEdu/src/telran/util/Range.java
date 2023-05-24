@@ -39,7 +39,6 @@ public class Range implements Iterable<Integer> {
 			if(!removedValuesListFinished) {
 				nextCalculation();
 			}
-			System.out.println(current);
 			return current < max;
 		}
 
@@ -109,12 +108,13 @@ public class Range implements Iterable<Integer> {
 	}
 
 	public boolean removeIf(Predicate<Integer> predicate) {
+		int prevSize = removedValuesList.size;
 		for(Integer element : this) {
 			if(predicate.test(element)) {
 				removedValuesList.add(element);
 			}
 		}
-		return removedValuesList.size > 0;
+		return removedValuesList.size > prevSize;
 	}
 
 }

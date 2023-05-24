@@ -156,6 +156,27 @@ public abstract class CollectionTest {
 		}
 		it.remove();
 		runTest(expectedLast);
+		
+	}
+	@Test
+	void testIteratorWithTwoIterators() {
+		//protected Integer[] numbers = {10, -20, 7, 50, 100, 30};
+		Iterator<Integer> it1 = collection.iterator();
+		Iterator<Integer> it2 = collection.iterator();
+		
+		it1.next();
+		it1.remove();
+		Integer[] expected = {-20, 7, 50, 100, 30};
+		runTest(expected);
+		
+		
+		System.out.println(it2.next());
+		
+		//on next line we get No such element exception when returns current for one of iterator and removed in another (because of remove contains head.next = null)
+		//System.out.println(it2.next());
+
+		
+		
 	}
 	
 }

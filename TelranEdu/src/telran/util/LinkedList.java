@@ -206,6 +206,7 @@ public class LinkedList<T> implements List<T> {
 	}
 
 	//removing manager
+/*
 	private void removeNode(Node<T> node) {
 		if(node == head && node == tail) {
 			removeSingle();
@@ -242,6 +243,46 @@ public class LinkedList<T> implements List<T> {
 		size --;
 	}
 
+*/
+	
+	//by Yri
+	private void removeHead() {
+		Node<T> newHead = head.next;
+		if (newHead != null) {
+			newHead.prev = null;
+		}
+		NoSu
+		head = newHead;
+
+	}
+
+	private void removeTail() {
+		Node<T> newTail = tail.prev;
+		if (newTail != null) {
+			newTail.next = null;
+		}
+		tail.prev = null;
+		tail = newTail;
+	}
+
+	private void removeMiddle(Node<T> node) {
+		Node<T> nodeBefore = node.prev;
+		Node<T> nodeAfter = node.next;
+		nodeBefore.next = nodeAfter;
+		nodeAfter.prev = nodeBefore;
+		node.next = node.prev = null;
+	}
+
+	private void removeNode(Node<T> node) {
+		if (node == head) {
+			removeHead();
+		} else if (node == tail) {
+			removeTail();
+		} else {
+			removeMiddle(node);
+		}
+		size--;
+	}
 
 
 	//Iterator
