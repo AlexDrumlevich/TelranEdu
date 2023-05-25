@@ -46,9 +46,13 @@ Range range = new Range(10, 14);
 			it1.next();
 			}
 		it1.remove();
-		assertArrayEquals(expectedLast, range.toArray());
 		
-		
+		Iterator<Integer> it2 = range.iterator();
+		Integer[] expectedThird = {11};
+		it2.next();
+		it2.next();
+		it2.remove();
+		assertArrayEquals(expectedThird, range.toArray());
 	}
 //	@Test
 //	void removeIfTest() {

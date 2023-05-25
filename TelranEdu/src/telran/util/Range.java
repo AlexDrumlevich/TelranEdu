@@ -60,6 +60,7 @@ public class Range implements Iterable<Integer> {
 			}
 			flNext = false;
 			removedValuesList.add(prev);
+			removedValuesList.sort();
 		}
 
 		private void nextCalculation() {
