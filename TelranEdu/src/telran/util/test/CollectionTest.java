@@ -21,7 +21,7 @@ public abstract class CollectionTest {
 	//TODO move tests of interface collection methods (5 methods) from ListTest
 	//	to here
 
-	private static final int BIG_LENGTH = 100000;
+	protected static final int BIG_LENGTH = 100000;
 	protected Integer[] numbers = {10, -20, 7, 50, 100, 30};
 
 	protected Collection<Integer> collection;
