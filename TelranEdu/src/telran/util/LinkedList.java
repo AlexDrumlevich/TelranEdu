@@ -266,7 +266,7 @@ public class LinkedList<T> implements List<T> {
 			T object = current.obj;
 			current = current.next;
 			flNext = true;
-			return object;	
+			return object;
 		}
 		
 		@Override

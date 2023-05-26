@@ -3,6 +3,7 @@ package telran.util.test;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Arrays;
+import java.util.Iterator;
 
 import org.junit.jupiter.api.Test;
 
@@ -25,11 +26,11 @@ public abstract class SetTest extends CollectionTest {
 		return set;
 	}
 	protected void runTest(Integer[] expected) {
+		//{10, -20, 7, 50, 100, 30};
 		Integer [] actual = collection.toArray(new Integer[0]);
 		Integer expectedCopy[] = Arrays.copyOf(expected, expected.length);
 		Arrays.sort(expectedCopy);
 		Arrays.sort(actual);
-		
 		assertArrayEquals(expectedCopy, actual);
 		
 	}
@@ -60,4 +61,27 @@ public abstract class SetTest extends CollectionTest {
 		assertArrayEquals(expected, actualArray);
 	}
 
+	@Override
+	@Test
+	void testIteratorRemove() {
+		//start {10, -20, 7, 50, 100, 30};
+		Iterator<Integer> it = collection.iterator();
+		Integer[] array = collection.toArray(new Integer[0]);
+		Integer[] expectedFirst = new Integer[array.length - 1];
+		Integer[] expectedLast = new Integer[array.length - 2];
+		System.arraycopy(array, 1, expectedFirst, 0, expectedFirst.length); 
+		System.arraycopy(array, 1, expectedLast, 0, expectedLast.length);
+		
+		assertThrowsExactly(IllegalStateException.class, ()->it.remove());
+		it.next();
+		it.remove();
+		runTest(expectedFirst);
+		assertThrowsExactly(IllegalStateException.class, ()->it.remove());
+		while(it.hasNext()) {
+			it.next();
+		}
+		it.remove();
+		runTest(expectedLast);
+		
+	}
 }

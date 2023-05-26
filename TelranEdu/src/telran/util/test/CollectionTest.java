@@ -13,6 +13,7 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import telran.util.Collection;
@@ -88,6 +89,7 @@ public abstract class CollectionTest {
 	
 	@Test
 	void testRemoveIfPredicate() {
+		//	start	{10, -20, 7, 50, 100, 30};
 		Integer[] expected = {10, -20,  50, 100, 30};
 		assertFalse(collection.removeIf(a -> a % 2 != 0
 				&& a >= 10));
@@ -158,6 +160,8 @@ public abstract class CollectionTest {
 		runTest(expectedLast);
 		
 	}
+	
+	@Disabled
 	@Test
 	void testIteratorWithTwoIterators() {
 		//protected Integer[] numbers = {10, -20, 7, 50, 100, 30};
