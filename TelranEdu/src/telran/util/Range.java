@@ -23,6 +23,50 @@ public class Range implements Iterable<Integer> {
 
 
 	private class RangeIterator implements Iterator<Integer> {
+		Integer current = getCurrent(min - 1);
+		Integer prev = null;
+		boolean flNext = false;
+		@Override
+		public boolean hasNext() {
+			
+			return current != null;
+		}
+
+		@Override
+		public Integer next() {
+			if(current == null) {
+				throw new NoSuchElementException();
+			}
+			int currentNum = current;
+			prev = current;
+			current = getCurrent(current);
+			flNext = true;
+			return currentNum;
+		}
+		private Integer getCurrent(Integer current) {
+			Integer res = null;
+			current++;
+			while(current < max && res == null) {
+				if(!removedList.contains(current)) {
+					res = current;
+				}
+				current++;
+			}
+			return res;
+		}
+
+		@Override
+		public void remove() {
+			if(!flNext) {
+				throw new IllegalStateException();
+			}
+			removedList.add(prev);
+			flNext = false;
+			
+		}
+		
+	}
+	/*	
 		int current = min;
 		int prev; 
 		boolean flNext = false;
@@ -82,7 +126,7 @@ public class Range implements Iterable<Integer> {
 			}
 		}
 	}
-
+*/
 	@Override
 	public Iterator<Integer> iterator() {
 
@@ -108,14 +152,29 @@ public class Range implements Iterable<Integer> {
 		return array;
 	}
 
+//	public boolean removeIf(Predicate<Integer> predicate) {
+//		int prevSize = removedValuesList.size;
+//		for(Integer element : this) {
+//			if(predicate.test(element)) {
+//				removedValuesList.add(element);
+//			}
+//		}
+//		return removedValuesList.size > prevSize;
+//	}
 	public boolean removeIf(Predicate<Integer> predicate) {
-		int prevSize = removedValuesList.size;
-		for(Integer element : this) {
-			if(predicate.test(element)) {
-				removedValuesList.add(element);
+		int oldSize = getSize() ;
+		Iterator<Integer> it = iterator();
+		while(it.hasNext()) {
+			int number = it.next();
+			if (predicate.test(number)) {
+				it.remove();
 			}
 		}
-		return removedValuesList.size > prevSize;
+		return oldSize > getSize();
+	}
+	
+	private int getSize() {
+		return max - min - removedValuesList.size();
 	}
 
 }
