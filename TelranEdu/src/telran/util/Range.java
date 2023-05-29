@@ -47,7 +47,7 @@ public class Range implements Iterable<Integer> {
 			Integer res = null;
 			current++;
 			while(current < max && res == null) {
-				if(!removedList.contains(current)) {
+				if(!removedValuesList.contains(current)) {
 					res = current;
 				}
 				current++;
@@ -60,7 +60,7 @@ public class Range implements Iterable<Integer> {
 			if(!flNext) {
 				throw new IllegalStateException();
 			}
-			removedList.add(prev);
+			removedValuesList.add(prev);
 			flNext = false;
 			
 		}
