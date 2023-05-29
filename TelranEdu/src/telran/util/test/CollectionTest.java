@@ -86,7 +86,7 @@ public abstract class CollectionTest {
 		assertTrue(collection.removeIf(a -> true));
 		assertEquals(0, collection.size());
 	}
-	
+
 	@Test
 	void testRemoveIfPredicate() {
 		//	start	{10, -20, 7, 50, 100, 30};
@@ -106,6 +106,7 @@ public abstract class CollectionTest {
 		}
 		*/
 		Integer [] actual = collection.toArray(new Integer[0]);
+	
 		assertArrayEquals(expected, actual);
 	}
 

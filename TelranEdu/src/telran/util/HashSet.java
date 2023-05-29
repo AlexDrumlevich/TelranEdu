@@ -66,8 +66,68 @@ public class HashSet<T> implements Set<T> {
 			return innerListIterator.next();
 		}
 
-	}
 
+	}
+	/*
+	private class HashSetIterator implements Iterator<T> {
+		Integer currentIteratorIndex;
+		Iterator<T> currentIterator; // iterator of linked list
+		Iterator<T> prevIterator; // iterator of linked list use to remove (if we change list, but we have to delete from previous list) 
+		
+		boolean flNext = false;
+		HashSetIterator() {
+			initialState();
+		}
+		
+		
+		private void initialState() {
+			currentIteratorIndex = getCurrentIteratorIndex(-1);
+			if(currentIteratorIndex > -1) {
+				currentIterator = hashTable[currentIteratorIndex].iterator();
+				
+				
+			}
+			
+			
+		}
+		//get index of next hash table where linked list not null and linked list size not empty
+		private int getCurrentIteratorIndex(int currentIndex) {
+			currentIndex++;
+			while(currentIndex < hashTable.length && 
+					(hashTable[currentIndex] == null || hashTable[currentIndex].size() == 0)) {
+				currentIndex++;
+			}
+			return currentIndex < hashTable.length ? currentIndex : -1;
+		}
+		
+		@Override
+		public boolean hasNext() {
+			
+			return currentIteratorIndex >= 0; // if there is not linked list not null or not empty in hash table we set -1 to currentIteratorIndex
+		}
+
+		@Override
+		public T next() {
+			if(!hasNext()) {
+				throw new NoSuchElementException();
+			}
+			T res = currentIterator.next();
+			prevIterator = currentIterator;
+			updateState();
+			flNext = true;
+			return res;
+		}
+		private void updateState() {
+			if(!currentIterator.hasNext()) {
+				currentIteratorIndex =
+						getCurrentIteratorIndex(currentIteratorIndex);
+				if(currentIteratorIndex >= 0) {
+					currentIterator = hashTable[currentIteratorIndex].iterator();
+				}
+			}	
+		}
+		*/
+		
 	@SuppressWarnings("unchecked")
 	public HashSet(int hashTableSize) {
 		hashTable = new LinkedList[hashTableSize];

@@ -25,12 +25,13 @@ public abstract class SetTest extends CollectionTest {
 		
 		return set;
 	}
+	@Override
 	protected void runTest(Integer[] expected) {
 		//{10, -20, 7, 50, 100, 30};
 		Integer [] actual = collection.toArray(new Integer[0]);
 		Integer expectedCopy[] = Arrays.copyOf(expected, expected.length);
 		Arrays.sort(expectedCopy);
-		Arrays.sort(actual);
+		Arrays.sort(actual); 
 		assertArrayEquals(expectedCopy, actual);
 		
 	}
