@@ -7,7 +7,7 @@ import java.util.NoSuchElementException;
 
 import javax.swing.plaf.basic.BasicSplitPaneUI.KeyboardUpLeftHandler;
 
-public class TreeSet<T> implements Set<T> {
+public class TreeSet<T> implements SortedSet<T> {
 
 	//PROPERTIES
 	private Node<T> root;
@@ -15,8 +15,12 @@ public class TreeSet<T> implements Set<T> {
 	private int size;
 
 	//INIT
+	@SuppressWarnings("unchecked")
 	public TreeSet() {
-		comp = (Comparator<T>) Comparator.naturalOrder();
+		this((Comparator<T>) Comparator.naturalOrder());
+	}
+	public TreeSet(Comparator<T> comparator) {
+		comp = comparator;
 	}
 	
 	//INNER CLASSES
@@ -129,6 +133,27 @@ public class TreeSet<T> implements Set<T> {
 			res = true;
 		}
 		return res;
+	}
+	
+	@Override
+	public T first() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public T last() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public T ceiling(T key) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public T floor(T key) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 	
@@ -271,10 +296,6 @@ public class TreeSet<T> implements Set<T> {
 			root = newNode;
 			if(newNode != null)
 				newNode.parent = null;
-		}
-		
+		}	
 	}
-	
-
-
 }

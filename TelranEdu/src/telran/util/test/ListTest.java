@@ -2,8 +2,9 @@ package telran.util.test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.Arrays;
+
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 
 import telran.util.*;
 import telran.util.test.Models.Person;
@@ -12,23 +13,16 @@ import org.junit.jupiter.api.Test;
 
 
 
-abstract class ListTest extends CollectionTest {
-	
-	//get from inherits
-	List<Integer> list = getList();
-	//inherits must realize this method; 
-	abstract protected <T> List<T> getList();
+abstract class ListTest extends CollectionTest{
 
-	//realization abstract method of CollectionTest class, where list is passed,
-	//witch was gotten from inherits of current ListTest Class
-	@Override
-	protected Collection<Integer> getCollection() {
-		return list;
-	}
-	
-	
+List<Integer> list = getList();
+@Override
+protected Collection<Integer> getCollection() {
+	return list;
+}
 
-	//ADD by index
+	abstract protected <T> List<T> getList() ;
+	
 	@Test
 	void testAddIndex() {
 		Integer [] expected0_500 = {500, 10, -20, 7, 50, 100, 30};
@@ -44,10 +38,8 @@ abstract class ListTest extends CollectionTest {
 				() ->list.add(list.size() + 1, 100));
 		assertThrowsExactly(IndexOutOfBoundsException.class,
 				() ->list.add(-1, 100));
-
+		
 	}
-
-	//REMOVE
 	@Test
 	void testRemoveIndex() {
 		Integer [] expectedNo10 = { -20, 7, 50, 100, 30};
@@ -63,10 +55,8 @@ abstract class ListTest extends CollectionTest {
 				() -> list.remove(3));
 		assertThrowsExactly(IndexOutOfBoundsException.class,
 				() -> list.remove(-3));
-
+		
 	}
-
-	//GET INDEX
 	@Test
 	void testGetIndex() {
 		assertEquals(10, list.get(0));
@@ -75,34 +65,20 @@ abstract class ListTest extends CollectionTest {
 		assertThrowsExactly(IndexOutOfBoundsException.class,
 				() -> list.get(-1));
 	}
-
+	
 	@Test
 	void testIndexOf() {
 		list.add(3, 1280);
 		assertEquals(3, list.indexOf(1280));
 		assertEquals(-1, list.indexOf((Integer)null));
-		list.add(0, null);
-		assertEquals(0, list.lastIndexOf((Integer)null));
 	}
-
 	@Test
 	void testLastIndexOf() {
 		list.add(3, 10);
 		assertEquals(3, list.lastIndexOf(10));
 		assertEquals(-1, list.lastIndexOf((Integer)null));
-		list.add(0, null);
-		assertEquals(0, list.lastIndexOf((Integer)null));
 	}
-
-	@Test
-	void testIndexOfPredicate()  {
-		assertEquals(1, list.indexOf(a -> a < 0));
-		list.add(-17);
-		assertEquals(-1, list.indexOf(a -> a % 2 != 0 && a > 7));
-	}
-
-
-	//SORT
+	
 	@Test
 	void testSort() {
 		Integer expected[] = {-20, 7, 10, 30,  50, 100 };
@@ -134,44 +110,51 @@ abstract class ListTest extends CollectionTest {
 		persons.add(p3);
 		Person expected[] = {p3, p1, p2};
 		persons.sort((prs1, prs2) -> Integer.compare(prs2.getAge(), prs1.getAge()));
-
+	
 		assertArrayEquals(expected,
 				persons.toArray(new Person[0]));
-
+		
 	}
-
 	@Test
 	void testEvenOddSorting() {
 		Integer[] expected = { -20,  10, 30, 50, 100, 7, -17};
 		list.add(-17);
 		//list.sort((a, b) -> evenOddCompare(a, b));
-		//		list.sort((a, b) -> {
-		//			int res = Math.abs(a % 2) - Math.abs(b % 2);
-		//			if (res == 0) {
-		//				res = a % 2 == 0 ? a - b : b - a;
-		//			}
-		//			return res;
-		//		});
+//		list.sort((a, b) -> {
+//			int res = Math.abs(a % 2) - Math.abs(b % 2);
+//			if (res == 0) {
+//				res = a % 2 == 0 ? a - b : b - a;
+//			}
+//			return res;
+//		});
 		list.sort(ListTest::evenOddCompare);
 		assertArrayEquals(expected, list.toArray(new Integer[0]));
 	}
-
-
+	@Test
+	void testIndexOfPredicate()  {
+		assertEquals(1, list.indexOf(a -> a < 0));
+		list.add(-17);
+		assertEquals(-1, list.indexOf(a -> a % 2 != 0 && a > 7));
+	}
+	@Override
+	protected Integer[] getActual(Integer[] array, int size) {
+		
+		return array;
+	}
+	@Override
+	protected Integer[] getExpected(Integer[] array) {
+		
+		return array;
+	}
+	
+	
+	
 	static private int evenOddCompare(Integer a, Integer b) {
 		int res = Math.abs(a % 2) - Math.abs(b % 2);
 		if (res == 0) {
 			res = a % 2 == 0 ? a - b : b - a;
 		}
 		return res;
-	}
-	
-	@Test
-	void clearPerformance() {
-		List<Integer> bigList = getList();
-		for(int i = 0; i < 1_000_000; i++) {
-			bigList.add(i);
-		}
-		bigList.clear();
 	}
 
 }

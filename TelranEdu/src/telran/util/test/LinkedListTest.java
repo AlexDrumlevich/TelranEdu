@@ -6,7 +6,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 
 import telran.util.*;
-import telran.util.test.Models.Person;
 
 import org.junit.jupiter.api.Test;
 
@@ -16,6 +15,7 @@ class LinkedListTest extends ListTest{
 
 	@Override
 	protected <T> List<T> getList() {
+		
 		return new LinkedList<>();
 	}
 
