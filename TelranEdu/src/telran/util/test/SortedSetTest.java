@@ -1,6 +1,10 @@
 package telran.util.test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import java.util.NoSuchElementException;
+import java.util.TreeSet;
 
 import org.junit.jupiter.api.Test;
 
@@ -20,11 +24,15 @@ public abstract class SortedSetTest extends SetTest {
 	void firstTest() {
 		SortedSet<Integer> sortedSet = (SortedSet<Integer>)set;
 		assertEquals(-20, sortedSet.first());
+		sortedSet.clear();
+		assertThrows(NoSuchElementException.class, () -> sortedSet.first());
 	}
 	@Test
 	void lastTest() {
 		SortedSet<Integer> sortedSet = (SortedSet<Integer>)set;
 		assertEquals(100, sortedSet.last());
+		sortedSet.clear();
+		assertThrows(NoSuchElementException.class, () -> sortedSet.last());
 	}
 	@Test
 	void ceilingTest() {
@@ -34,7 +42,7 @@ public abstract class SortedSetTest extends SetTest {
 		assertEquals(50, sortedSet.ceiling(40));
 		assertEquals(100, sortedSet.ceiling(60));
 		assertEquals(null, sortedSet.ceiling(101));
-		
+		assertThrows(NullPointerException.class, () -> sortedSet.ceiling(null));
 	}
 	@Test
 	void floorTest() {
@@ -45,6 +53,7 @@ public abstract class SortedSetTest extends SetTest {
 		assertEquals(50, sortedSet.floor(60));
 		assertEquals(100, sortedSet.floor(101));
 		assertEquals(null, sortedSet.floor(-25));
+		assertThrows(NullPointerException.class, () -> sortedSet.floor(null));
 	}
 
 }

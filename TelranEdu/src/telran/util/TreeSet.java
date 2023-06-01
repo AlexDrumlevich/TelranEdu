@@ -138,12 +138,20 @@ public class TreeSet<T> implements SortedSet<T> {
 	
 	@Override
 	public T first() {
-		return root != null ? getLeast(root).obj : null;
+		if(size == 0) {
+			throw new NoSuchElementException();
+		}
+		return getLeast(root).obj;
 	}
+	
 	@Override
 	public T last() {
-		return root != null ? getGreater(root).obj : null;
+		if(size == 0) {
+			throw new NoSuchElementException();
+		}
+		return getGreater(root).obj;
 	}
+	
 	@Override
 	public T ceiling(T key) {
 		return getObjectOrBigger(false, key);
@@ -165,8 +173,9 @@ public class TreeSet<T> implements SortedSet<T> {
 		//if looks for floor - opposite 
 		Node<T> currentNode = getNodeParent(key);
 		int compRes = reversOrder ? comp.compare(currentNode.obj, key) * -1 : comp.compare(currentNode.obj, key);
-		if(compRes < 0)
+		if(compRes < 0) {
 			currentNode = reversOrder ? getLeastParent(currentNode) : getGreaterParent(currentNode);
+		}
 		return currentNode != null ? currentNode.obj : null;
 	}
 	
