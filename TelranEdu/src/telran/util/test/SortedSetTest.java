@@ -9,6 +9,8 @@ import telran.util.SortedSet;
 
 public abstract class SortedSetTest extends SetTest {
 
+	//start { 10, -20, 7, 50, 100, 30 }
+	
 	@Override
 	protected Integer[] getActual(Integer[] array, int size) {
 		//System.out.println("Sorted test");
@@ -27,12 +29,22 @@ public abstract class SortedSetTest extends SetTest {
 	@Test
 	void ceilingTest() {
 		SortedSet<Integer> sortedSet = (SortedSet<Integer>)set;
-		//TODO test for the method ceiling
+		assertEquals(50, sortedSet.ceiling(50));
+		assertEquals(-20, sortedSet.ceiling(-25));
+		assertEquals(50, sortedSet.ceiling(40));
+		assertEquals(100, sortedSet.ceiling(60));
+		assertEquals(null, sortedSet.ceiling(101));
+		
 	}
 	@Test
 	void floorTest() {
 		SortedSet<Integer> sortedSet = (SortedSet<Integer>)set;
-		//TODO test for the method floor
+		assertEquals(50, sortedSet.floor(50));
+		assertEquals(-20, sortedSet.floor(-10));
+		assertEquals(30, sortedSet.floor(40));
+		assertEquals(50, sortedSet.floor(60));
+		assertEquals(100, sortedSet.floor(101));
+		assertEquals(null, sortedSet.floor(-25));
 	}
 
 }

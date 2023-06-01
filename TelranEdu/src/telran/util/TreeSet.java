@@ -1,6 +1,7 @@
 package telran.util;
 
 import java.awt.desktop.AboutHandler;
+import java.security.KeyStore.PrivateKeyEntry;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -137,27 +138,37 @@ public class TreeSet<T> implements SortedSet<T> {
 	
 	@Override
 	public T first() {
-		// TODO Auto-generated method stub
-		return null;
+		return root != null ? getLeast(root).obj : null;
 	}
 	@Override
 	public T last() {
-		// TODO Auto-generated method stub
-		return null;
+		return root != null ? getGreater(root).obj : null;
 	}
 	@Override
 	public T ceiling(T key) {
-		// TODO Auto-generated method stub
-		return null;
+		return getObjectOrBigger(false, key);
 	}
+	
 	@Override
 	public T floor(T key) {
-		// TODO Auto-generated method stub
-		return null;
+		return getObjectOrBigger(true, key);
 	}
 	
 	
 		//PRIVATE
+	
+	private T getObjectOrBigger(boolean reversOrder, T key) {
+		//if key was found => return key
+		//if key was not found => parent was found (may be null) 
+		//if parent is grater then key => return parent (it is next in order) (may be null) 
+		//if parent is lower then key => look for grater parent then suggested parent (it will be next in order, it`ll be grater then object, otherwise searching goes to opposite side from that parent in the beginning) (may be null)      
+		//if looks for floor - opposite 
+		Node<T> currentNode = getNodeParent(key);
+		int compRes = reversOrder ? comp.compare(currentNode.obj, key) * -1 : comp.compare(currentNode.obj, key);
+		if(compRes < 0)
+			currentNode = reversOrder ? getLeastParent(currentNode) : getGreaterParent(currentNode);
+		return currentNode != null ? currentNode.obj : null;
+	}
 	
 	private Node<T> getNodeParent(T obj) {
 		Node<T> current = root;
@@ -231,7 +242,14 @@ public class TreeSet<T> implements SortedSet<T> {
 		}
 		return current.parent;
 	}
-
+	
+	private Node<T> getLeastParent(Node<T> current) {
+		while(current.parent != null && current == current.parent.left) {
+			current = current.parent;
+		}
+		return current.parent;
+	}
+	
 
 	private void removeNode(Node<T> node) {
 		
