@@ -154,12 +154,52 @@ public class TreeSet<T> implements SortedSet<T> {
 	
 	@Override
 	public T ceiling(T key) {
-		return getObjectOrBigger(false, key);
+		/*
+		Node<T> current = getNodeParent(key);
+		T res = null;
+		if(current != null && comp.compare(current.obj, key) >= 0) {
+			res = current.obj;
+		}
+		return res;		
+		*/
+		
+		Node<T> current = getNodeParent(key);
+		if(current != null && comp.compare(current.obj, key) < 0 ) {
+			while(current.parent != null && current == current.parent.right)		{
+				//get parent from right
+				current = current.parent;
+			}
+			//get parent from left or null
+			current = current.parent;
+		}
+		return current != null ? current.obj : null;
+		
+		//return getObjectOrBigger(false, key);
 	}
 	
 	@Override
 	public T floor(T key) {
-		return getObjectOrBigger(true, key);
+		/*
+		Node<T> current = getNodeParent(key);
+		T res = null;
+		if(current != null && comp.compare(current.obj, key) <= 0) {
+			res = current.obj;
+		}
+		return res;
+		*/
+		
+		Node<T> current = getNodeParent(key);
+		if(current != null && comp.compare(current.obj, key) > 0) {
+			while(current.parent != null && current == current.parent.left) {
+				//get parent from left
+				current = current.parent;
+			}
+			//get parent from right or null 
+			current = current.parent;
+		}
+		return current != null ? current.obj : null;
+		
+//		return getObjectOrBigger(true, key);
 	}
 	
 	
