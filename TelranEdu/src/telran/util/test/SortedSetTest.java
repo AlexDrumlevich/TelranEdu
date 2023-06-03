@@ -66,7 +66,7 @@ public abstract class SortedSetTest extends SetTest {
 		SortedSet<Integer> newSortedSetNotIncludesNull = new telran.util.TreeSet<>(new IntegerNullTheLeastComparator());
 		fillSortedSet(numbersWithOutNull, newSortedSetNotIncludesNull);
 		assertEquals(-20, newSortedSetNotIncludesNull.ceiling(null));
-		assertDoesNotThrow(() -> newSortedSetNotIncludesNull.floor(null));
+		assertDoesNotThrow(() -> newSortedSetNotIncludesNull.ceiling(null));
 		
 	}
 	@Test
@@ -82,7 +82,7 @@ public abstract class SortedSetTest extends SetTest {
 		
 		
 		sortedSet.clear();
-		assertEquals(null, sortedSet.ceiling(10));
+		assertEquals(null, sortedSet.floor(10));
 		
 		
 		//using null friendly comparator
