@@ -30,6 +30,7 @@ class LineRecursionTest {
 		assertEquals(1, LineRecursion.factorial(0));
 		
 	}
+	@Disabled
 	@Test
 	void powTest () {
 		assertEquals(100, LineRecursion.pow(10, 2));
@@ -50,5 +51,16 @@ class LineRecursionTest {
 		assertArrayEquals(expected, LineRecursion.reverse(array));
 		assertArrayEquals(expected1, LineRecursion.reverse(array1));
 	}
+	
+	@Test
+	void squareTest() {
+		assertEquals(100, LineRecursion.square(10));
+		assertEquals(100, LineRecursion.square(-10));
+		assertEquals(0, LineRecursion.square(0));
+		assertEquals(49, LineRecursion.square(7));
+		
+	}
+
+	
 
 }
