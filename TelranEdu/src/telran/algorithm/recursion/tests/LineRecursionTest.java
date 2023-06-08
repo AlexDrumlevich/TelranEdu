@@ -30,13 +30,15 @@ class LineRecursionTest {
 		assertEquals(1, LineRecursion.factorial(0));
 		
 	}
-	@Disabled
+
 	@Test
 	void powTest () {
 		assertEquals(100, LineRecursion.pow(10, 2));
 		assertEquals(100, LineRecursion.pow(-10, 2));
 		assertEquals(1000, LineRecursion.pow(10, 3));
 		assertEquals(-1000, LineRecursion.pow(-10, 3));
+		assertEquals(8, LineRecursion.pow(2, 3));
+		assertEquals(4, LineRecursion.pow(2, 2));
 	}
 	@Test
 	void sumTest() {

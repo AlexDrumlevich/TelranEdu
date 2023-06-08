@@ -1,5 +1,7 @@
 package telran.algorithm.recursion;
 
+import java.util.concurrent.CountDownLatch;
+
 public class LineRecursion {
 	
 	public static long factorial(int n) {
@@ -13,7 +15,12 @@ public class LineRecursion {
 		return res;
 	}
 	
-	public static long pow(int a, int b) {
+	
+
+	private static int powCall;
+	private static int multiplyCall;
+	
+	public static int pow(int a, int b) {
 		//a - any number
 		//b - any positive number or zero
 //		if (b < 0) {
@@ -39,10 +46,35 @@ public class LineRecursion {
 				//2^2 = 2^1 + 2^1
 				//2^1 = 2^0 + 2^0
 				
-			
-				return 0;
-			}
-				
+		System.out.println("Pow call " + ++powCall + " power: " + b);
+		if (b < 0) {
+			throw new IllegalArgumentException("Pow cannot be negative value");
+		}
+		int res = 1;
+		if (b > 0) {
+			res = multiply(a, pow(a, b - 1)); // a^b = a * a^(b - 1)
+		}
+		return res;
+	}
+	
+	public static int multiply(int a, int b) {
+		System.out.println("Multiply call " + ++multiplyCall + ". " + " a: " + a +  " b: " + b);
+		//make all positive, saved in other var
+		int x = (a>=0) ? a : -a;
+		int y = (b>=0) ? b : -b;
+		int res = 0;
+		if(y>0) {
+			res = x + multiply(x, y - 1); // x + 0 -> x + x -> 2x + x -> 3x + x
+			System.out.println("Res: " + res);
+		}
+		
+		// - * - = +  (no(!) + and +  OR - and -)  
+		if(!((a>0 && b>0) || (a<0 && b<0))) {
+			res = -res;
+		}
+		System.out.println("Res final: " + res);
+		return res;
+	}
 	
 	
 	
@@ -94,6 +126,27 @@ public class LineRecursion {
 		return result;   	
 	}
 	
-	
-	
+
+	public static boolean isSubstring(String string, String substr) {
+		boolean exists = false;
+		// base case 1: substr is empty
+		if (substr.length() == 0) {
+			exists = true;
+		} else if (string.length() == 0 || string.length() < substr.length()) {
+		// base case 2: string is empty or shorter than substr
+			exists = false;
+		} else if (string.charAt(0) == substr.charAt(0)) {
+			// recursive case: compare first character of substr with each character of string		
+			// if match, compare rest of substr with rest of string
+			exists = isSubstring(string.substring(1), substr.substring(1));
+		} else {
+			// if no match, move to next character of string
+			exists = isSubstring(string.substring(1), substr);
+		}
+		return exists;
+	}
 }
+
+
+	
+	

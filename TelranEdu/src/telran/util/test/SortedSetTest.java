@@ -18,6 +18,15 @@ import telran.util.SortedSet;
 
 public abstract class SortedSetTest extends SetTest {
 
+	SortedSet<Integer> sortedSet;
+	
+	@BeforeEach
+	@Override
+	void setUp() {
+		super.setUp();
+		sortedSet = (SortedSet<Integer>) set;
+	}
+	
 	private Integer[] numbersWithNull = { 10, -20, 7, null, 50, 100, 30 };
 	private Integer[] numbersWithOutNull = { 10, -20, 7, 50, 100, 30 };
 	//start { 10, -20, 7, 50, 100, 30 }
@@ -29,21 +38,18 @@ public abstract class SortedSetTest extends SetTest {
 	}
 	@Test
 	void firstTest() {
-		SortedSet<Integer> sortedSet = (SortedSet<Integer>)set;
 		assertEquals(-20, sortedSet.first());
 		sortedSet.clear();
 		assertThrows(NoSuchElementException.class, () -> sortedSet.first());
 	}
 	@Test
 	void lastTest() {
-		SortedSet<Integer> sortedSet = (SortedSet<Integer>)set;
 		assertEquals(100, sortedSet.last());
 		sortedSet.clear();
 		assertThrows(NoSuchElementException.class, () -> sortedSet.last());
 	}
 	@Test
 	void ceilingTest() {
-		SortedSet<Integer> sortedSet = (SortedSet<Integer>)set;
 		assertEquals(50, sortedSet.ceiling(50));
 		assertEquals(-20, sortedSet.ceiling(-25));
 		assertEquals(50, sortedSet.ceiling(40));
@@ -71,7 +77,6 @@ public abstract class SortedSetTest extends SetTest {
 	}
 	@Test
 	void floorTest() {
-		SortedSet<Integer> sortedSet = (SortedSet<Integer>)set;
 		assertEquals(50, sortedSet.floor(50));
 		assertEquals(-20, sortedSet.floor(-10));
 		assertEquals(30, sortedSet.floor(40));
