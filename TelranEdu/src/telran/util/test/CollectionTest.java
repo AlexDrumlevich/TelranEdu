@@ -161,6 +161,21 @@ public abstract class CollectionTest {
 			collection.add(num);
 		}
 	}
+	
+	@Test
+	void sumEvenNumbersTest() {
+		assertEquals(170,collection.stream().filter(n -> n % 2 == 0)
+				.mapToInt(n -> n).sum());
+	}
+	@Test
+	void positiveEvenNumbersTest() {
+		int[] expected = {10, 30, 50, 100};
+		assertArrayEquals(expected,
+				collection.stream().filter(n -> n > 0 && n % 2 == 0)
+				.sorted()
+				.mapToInt(n -> n).toArray());
+	}
+	
 	protected void runTest(Integer[] expected) {
 		Integer [] actual = collection.toArray(new Integer[0]);
 		
