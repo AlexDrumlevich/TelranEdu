@@ -78,6 +78,52 @@ class PrimitiveStreamTest {
 	}
 
 	@Test
+	void shuffleTest2() {
+		for (int i = 0; i < N_RUNS; i++) {
+			int[] arrayPrevious = new Random().ints().limit(N_RUNS).toArray();
+			int[] arraySuffled1 = getSuffledArray2(Arrays.copyOf(arrayPrevious, arrayPrevious.length));
+			int[] arraySuffled2 = getSuffledArray2(Arrays.copyOf(arrayPrevious, arrayPrevious.length));
+
+			// Equals length
+			assertEquals(arrayPrevious.length, arraySuffled1.length);
+			assertEquals(arrayPrevious.length, arraySuffled2.length);
+
+			//arrays not equal
+			assertFalse(Arrays.equals(arrayPrevious, arraySuffled1));
+			assertFalse(Arrays.equals(arrayPrevious, arraySuffled2));
+			assertFalse(Arrays.equals(arraySuffled1, arraySuffled2));
+
+			//arrays equal	
+			assertArrayEquals(Arrays.stream(arrayPrevious).sorted().toArray(), Arrays.stream(arraySuffled1).sorted().toArray());
+			assertArrayEquals(Arrays.stream(arrayPrevious).sorted().toArray(), Arrays.stream(arraySuffled2).sorted().toArray());
+
+		}
+	}
+	
+	@Test
+	void shuffleTest3() {
+		for (int i = 0; i < N_RUNS; i++) {
+			int[] arrayPrevious = new Random().ints().limit(N_RUNS).toArray();
+			int[] arraySuffled1 = getSuffledArray3(Arrays.copyOf(arrayPrevious, arrayPrevious.length));
+			int[] arraySuffled2 = getSuffledArray3(Arrays.copyOf(arrayPrevious, arrayPrevious.length));
+
+			// Equals length
+			assertEquals(arrayPrevious.length, arraySuffled1.length);
+			assertEquals(arrayPrevious.length, arraySuffled2.length);
+
+			//arrays not equal
+			assertFalse(Arrays.equals(arrayPrevious, arraySuffled1));
+			assertFalse(Arrays.equals(arrayPrevious, arraySuffled2));
+			assertFalse(Arrays.equals(arraySuffled1, arraySuffled2));
+
+			//arrays equal	
+			assertArrayEquals(Arrays.stream(arrayPrevious).sorted().toArray(), Arrays.stream(arraySuffled1).sorted().toArray());
+			assertArrayEquals(Arrays.stream(arrayPrevious).sorted().toArray(), Arrays.stream(arraySuffled2).sorted().toArray());
+
+		}
+	}
+	
+	@Test
 	void twoDimensionalRandomArrayTest() {
 		int[][] array = twoDimensionalRandomArray(4, 6, MIN_NUMBER, MAX_NUMBER);
 		for(int i = 0; i < array.length; i ++) {

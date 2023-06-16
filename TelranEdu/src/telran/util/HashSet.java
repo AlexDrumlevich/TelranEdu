@@ -181,6 +181,27 @@ public class HashSet<T> implements Set<T> {
 
 		return size;
 	}
+	
+	
+	@Override
+	public T get(T pattern) {
+		T res = null;
+		//get index in table
+		int index = getHashTableIndex(pattern);
+		//if there is LinkedList inside 
+		if(hashTable[index] != null) {
+			List<T> list = hashTable[index];
+			//thy to find object using iterator
+			Iterator<T> it = list.iterator();
+			while(it.hasNext() && res == null) {
+				T obj = it.next();
+				if (obj.equals(pattern)) {
+					res = obj;
+				}
+			}
+		}
+		return res;
+	}
 
 	@Override
 	public boolean remove(T pattern) {

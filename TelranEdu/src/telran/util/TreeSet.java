@@ -414,6 +414,14 @@ import javax.swing.plaf.basic.BasicSplitPaneUI.KeyboardUpLeftHandler;
 		return current.parent;
 	}
 	
+	@Override
+	public T get(T pattern) {
+		T res = null;
+		//using floor or ceiling the same, because if objects not the same, we return null 
+		res = floor(pattern);
+		return res != null && comp.compare(pattern, res) == 0 ? res : null;
+	}
+	
 
 	private void removeNode(Node<T> node) {
 		

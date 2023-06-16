@@ -6,6 +6,7 @@ import java.util.PrimitiveIterator.OfInt;
 import java.util.Random;
 import java.util.stream.IntStream;
 
+import telran.util.ArrayList;
 import telran.util.HashSet;
 
 public class PrimitiveStreams {
@@ -56,4 +57,55 @@ public class PrimitiveStreams {
 		})
 				.toArray(); 
 	}
+	
+	//V.R.
+	static public int[] getSuffledArray2(int[] array) {
+		//TODO 
+		//returns new array with shuffled numbers
+		//Implementation hints: two stream pipes
+		//first stream pipe fills telran.util.ArrayList<Integer> with array's numbers in the
+		// random order (apply the same approach
+		// as in the randomUnique method with forEach instead of toArray for
+		// adding numbers to the ArrayList
+		// 
+		//second stream pipe creates array of int's from telran.util.ArrayList as we have done at class
+		ArrayList<Integer> list = new ArrayList<>();
+		new Random().ints(0, array.length)
+		.distinct().limit(array.length).forEach(ind -> list.add(array[ind]));
+		return 	list.stream().mapToInt(n -> n).toArray();
+	}
+	
+	//Luda
+	static public int[] getSuffledArray3(int[] array) {
+		
+		return	new Random().
+				ints(0, array.length)
+					.distinct()
+					.limit(array.length)
+					.map(n -> array[n])
+					.toArray();
+	}
+	
+	//Yri
+	static public int[] getSuffledArray4(int[] array) {
+		
+//		List<Integer> list = new ArrayList<>();
+		int [] res = new int[array.length];
+		
+			//if we use local variable to pass it into stream, it must be a Final (it is final by default)	
+			//But each time (each iteration) it pass this value, and it value can not be change inside stream  
+		//int index = 0;
+		
+			//!!!But was found the next way: passing reference to stream let change value in array, if use Integer - it will not help because it is immutable
+			//using operator =  lid to creating new object Integer with new reference and value   
+		int []index = {0};
+	
+	    new Random().ints(0, array.length).distinct().limit(array.length)
+	    //.forEach(i -> list.add(array[i]));
+		.forEach(i -> res[index[0]++] = array[i]);
+		
+		//return list.stream().mapToInt(n -> n).toArray();
+		return res;
+	}
+	
 }
