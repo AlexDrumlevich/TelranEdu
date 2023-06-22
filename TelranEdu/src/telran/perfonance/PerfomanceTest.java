@@ -19,7 +19,7 @@ public abstract class PerfomanceTest {
 			runTest();
 		}
 		long finishTime = System.currentTimeMillis();
-		System.out.println("Count of running test: " + nRuns + " " + testName + " " + (finishTime - startTime) + " ms.");  
+		System.out.println("Test name: " + testName + ", count of running test: " + nRuns + ", " + "spent time: " + (finishTime - startTime) + " ms.");  
 	}
 	
 	abstract protected void runTest();
