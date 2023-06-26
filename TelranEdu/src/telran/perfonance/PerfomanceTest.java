@@ -22,5 +22,5 @@ public abstract class PerfomanceTest {
 		System.out.println("Test name: " + testName + ", count of running test: " + nRuns + ", " + "spent time: " + (finishTime - startTime) + " ms.");  
 	}
 	
-	abstract protected void runTest();
+	abstract void runTest();
 }
