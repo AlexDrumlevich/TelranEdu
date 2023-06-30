@@ -4,6 +4,10 @@ import java.util.HashMap;
 import java.util.NoSuchElementException;
 import java.util.function.BinaryOperator;
 
+import javax.sound.sampled.BooleanControl;
+
+import org.hamcrest.StringDescription;
+
 public class Strings {
 	static HashMap<String, BinaryOperator<Double>> mapOperations;
 	static {
@@ -34,15 +38,24 @@ public class Strings {
 	public static String arithmeticExpression() {
 		String operandRE = operand();
 		String operatorRE = operator();
-		return String.format("%1$s(%2$s%1$s)*",operandRE, operatorRE );
+
+		return String.format("%1$s(%2$s%1$s)*",operandRE, operatorRE);
 	}
 	public static String operator() {
 		return "\\s*([-+*/])\\s*";
 	}
-	//0, 10.1, 10.0, .1, 10., 0.1, 10.12340000) or Java variable 
+	//10, 10.1, 10.0, .1, 10., 0.1, 10.12340000) or Java variable 
 	public static String operand() {
 		//assumption: not unary operators
-		return "(\\d+\\.\\d*|\\.\\d+|0|" +javaVariableName()+ ")";
+		return String.format("(%s|%s|%s)", operandDoubleWithDotRequired(), operandDoubleWithOutDotRequired(), javaVariableName());
+	}
+	
+	public static String operandDoubleWithDotRequired() {
+		//assumption: not unary operators
+		return "(\\d+\\.\\d*|\\.\\d+)";
+	}
+	public static String operandDoubleWithOutDotRequired() {
+		return "(\\d+)";
 	}
 
 
@@ -62,23 +75,31 @@ public class Strings {
 		String [] operators = expression.split(operand());
 		double res = getDoubleOperandFromString(operands[0], mapVariables);
 
+		boolean areAllWithOutDot = operands[0].matches(operandDoubleWithOutDotRequired());
+		
 		for(int i = 1; i < operands.length; i++) {
 			res = mapOperations.get(operators[i]).apply(res, getDoubleOperandFromString(operands[i], mapVariables));
+			if(areAllWithOutDot) {
+				areAllWithOutDot = operands[i].matches(operandDoubleWithOutDotRequired());
+			}
 		}	
+		if(areAllWithOutDot) {
+			throw new IllegalArgumentException("Wrong arithmetic expression (there is no double value");
+		}
 		return res;
 	}
 
 	private static double getDoubleOperandFromString(String operandString, HashMap<String, Double> mapVariables) {
-		double operandDouble;
+		Double operandDouble;
 		
 		if(operandString.matches(javaVariableName())) {
-			if (!mapVariables.containsKey(operandString)) {
+			if ((operandDouble = mapVariables.get(operandString)) == null) { 
 				throw new NoSuchElementException("No such variable");
 			}
-			operandDouble = mapVariables.get(operandString);
 		} else {
 			operandDouble = Double.parseDouble(operandString);
 		}
 		return operandDouble;
 	}
 }
+

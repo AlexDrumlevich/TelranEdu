@@ -14,33 +14,33 @@ class StringsTest {
 	@Test
 	void test() {
 		//String regex = "gray|grey|griy";
-//		String regex = "gr(a|e|i)y";
-//		assertTrue("gray".matches(regex));
-//		assertTrue("grey".matches(regex));
-//		assertTrue("griy".matches(regex));
-//		assertFalse("groy".matches(regex));
-//		String regex = "a?1234";
-//		assertTrue("1234".matches(regex));
-//		assertTrue("a1234".matches(regex));
-//		assertFalse("b1234".matches(regex));
-//		assertFalse("aa1234".matches(regex));
-//		String regex = "a*1234";
-//		assertTrue("1234".matches(regex));
-//		assertTrue("a1234".matches(regex));
-//		assertFalse("b1234".matches(regex));
-//		assertTrue("aa1234".matches(regex));
-//		String regex = "a+1234";
-//		assertFalse("1234".matches(regex));
-//		assertTrue("a1234".matches(regex));
-//		assertFalse("b1234".matches(regex));
-//		assertTrue("aa1234".matches(regex));
-//		String regex = "(a|b)+1234";
-//		assertFalse("1234".matches(regex));
-//		assertTrue("a1234".matches(regex));
-//		assertTrue("b1234".matches(regex));
-//		assertTrue("aa1234".matches(regex));
-		
-		
+		//		String regex = "gr(a|e|i)y";
+		//		assertTrue("gray".matches(regex));
+		//		assertTrue("grey".matches(regex));
+		//		assertTrue("griy".matches(regex));
+		//		assertFalse("groy".matches(regex));
+		//		String regex = "a?1234";
+		//		assertTrue("1234".matches(regex));
+		//		assertTrue("a1234".matches(regex));
+		//		assertFalse("b1234".matches(regex));
+		//		assertFalse("aa1234".matches(regex));
+		//		String regex = "a*1234";
+		//		assertTrue("1234".matches(regex));
+		//		assertTrue("a1234".matches(regex));
+		//		assertFalse("b1234".matches(regex));
+		//		assertTrue("aa1234".matches(regex));
+		//		String regex = "a+1234";
+		//		assertFalse("1234".matches(regex));
+		//		assertTrue("a1234".matches(regex));
+		//		assertFalse("b1234".matches(regex));
+		//		assertTrue("aa1234".matches(regex));
+		//		String regex = "(a|b)+1234";
+		//		assertFalse("1234".matches(regex));
+		//		assertTrue("a1234".matches(regex));
+		//		assertTrue("b1234".matches(regex));
+		//		assertTrue("aa1234".matches(regex));
+
+
 	}
 	@Test
 	void javaVariableNameTest() {
@@ -60,7 +60,7 @@ class StringsTest {
 		assertFalse("a b".matches(regex));
 		assertFalse("a-b".matches(regex));
 		assertFalse(" ab".matches(regex));
-		
+
 	}
 	@Test
 	void zero_300Test() {
@@ -78,9 +78,9 @@ class StringsTest {
 		assertFalse("310".matches(regex));
 		assertFalse("-1".matches(regex));
 		assertFalse("3 ".matches(regex));
-		
-		
-		
+
+
+
 	}
 	@Test
 	void ipV4OctetTest() {
@@ -125,16 +125,17 @@ class StringsTest {
 		assertTrue(Strings.isArithmeticExpression("12./2."));//6
 		assertTrue(Strings.isArithmeticExpression(" 12.*  2. / 10.0 + 1000.0000 "));//1002.4
 		assertTrue(Strings.isArithmeticExpression(" 120. / 50. + 100. - 2. * 3. / 10. "));//30.12
-		
-		assertFalse(Strings.isArithmeticExpression(" 12 + 18"));
-		assertFalse(Strings.isArithmeticExpression(" 12"));
+
+		assertTrue(Strings.isArithmeticExpression(" 12 + 18"));
+		assertTrue(Strings.isArithmeticExpression(" 12"));
+		assertTrue(Strings.isArithmeticExpression(" 12.2 + 18"));
+
 		assertFalse(Strings.isArithmeticExpression(" 12. 18."));
 		assertFalse(Strings.isArithmeticExpression(" 12 18"));
-		assertFalse(Strings.isArithmeticExpression(" 12.2 + 18"));
 		assertFalse(Strings.isArithmeticExpression(" 12/3&4"));
 		assertFalse(Strings.isArithmeticExpression(" 12+20-"));
 		assertFalse(Strings.isArithmeticExpression(" 12/ 18 + 100 10"));
-		
+
 	}
 	@Test
 	void computeExpressionTest() {
@@ -142,10 +143,12 @@ class StringsTest {
 		mapVariables.put("x", .5);
 		mapVariables.put("y", 5.5);
 		mapVariables.put("z", 10.);
-		
-		
-		
+
+
+
 		assertEquals(12, Strings.computeExpression(" 12. ", mapVariables));
+		assertEquals(120, Strings.computeExpression(" 000001 + 119. ", mapVariables));
+		assertEquals(30, Strings.computeExpression(" 18 + 12. ", mapVariables));
 		assertEquals(1.3, Strings.computeExpression(" .5 + .8" , mapVariables));
 		assertEquals(2, Strings.computeExpression(" 12./ 6.", mapVariables));
 		assertEquals(6, Strings.computeExpression("12./2.", mapVariables));
@@ -155,13 +158,17 @@ class StringsTest {
 		assertEquals(1.5, Strings.computeExpression(" 3. *  x", mapVariables));
 		assertEquals(0.05, Strings.computeExpression(" x / z", mapVariables));
 		assertEquals(-9.5, Strings.computeExpression(" x - 10.", mapVariables));
+		assertEquals(-9.5, Strings.computeExpression(" x - 10", mapVariables));
 		
 		assertThrowsExactly(IllegalArgumentException.class,
 				() -> Strings.computeExpression(" 12/ 18 + 100 10", mapVariables));
-			assertThrowsExactly(IllegalArgumentException.class,
-						() -> Strings.computeExpression(" n/ 18 + 100 10", mapVariables));
-			assertThrowsExactly(NoSuchElementException.class,
-					() -> Strings.computeExpression(" n/ x", mapVariables));
+		assertThrowsExactly(IllegalArgumentException.class,
+				() -> Strings.computeExpression(" n/ 18 + 100 10", mapVariables));
+		assertThrowsExactly(NoSuchElementException.class,
+				() -> Strings.computeExpression(" n/ x", mapVariables));
+		assertThrowsExactly(IllegalArgumentException.class,
+				() -> Strings.computeExpression(" 10 + 9", mapVariables));
+
 	}
 
 }
