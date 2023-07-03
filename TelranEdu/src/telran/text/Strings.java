@@ -74,18 +74,24 @@ public class Strings {
 		String[] operands = expression.split(operator());
 		String [] operators = expression.split(operand());
 		double res = getDoubleOperandFromString(operands[0], mapVariables);
-
-		boolean areAllWithOutDot = operands[0].matches(operandDoubleWithOutDotRequired());
+		
+		//check for at least one contains dot
+		boolean areAllOperandsWithOutDot = operands[0].matches(operandDoubleWithOutDotRequired());
 		
 		for(int i = 1; i < operands.length; i++) {
 			res = mapOperations.get(operators[i]).apply(res, getDoubleOperandFromString(operands[i], mapVariables));
-			if(areAllWithOutDot) {
-				areAllWithOutDot = operands[i].matches(operandDoubleWithOutDotRequired());
+			
+			//check for at least one contains dot
+			if(areAllOperandsWithOutDot) {
+				areAllOperandsWithOutDot = operands[i].matches(operandDoubleWithOutDotRequired());
 			}
-		}	
-		if(areAllWithOutDot) {
+		}
+		
+		//check for at least one contains dot
+		if(areAllOperandsWithOutDot) {
 			throw new IllegalArgumentException("Wrong arithmetic expression (there is no double value");
 		}
+		
 		return res;
 	}
 
