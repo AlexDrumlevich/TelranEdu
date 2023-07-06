@@ -4,7 +4,7 @@ public enum LengthUnit {
 	
 	MM(0.001f, "MM"), CM(0.01f, "CM"), DM(0.1f, "DM"), FT(0.3048f, "FT"), M(1, "M"), DAM(10, "DAM"), HM(100, "HM"), KM(1000, "KM");
 
-	float value;
+	private float value;
 	String unitName;
 	LengthUnit(float value, String unitName) {
 		this.value = value;

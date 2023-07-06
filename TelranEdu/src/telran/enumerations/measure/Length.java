@@ -2,8 +2,8 @@ package telran.enumerations.measure;
 
 public class Length implements Comparable<Length>{
 
-	float amount;
-	LengthUnit lengthUnit;
+	private float amount;
+	private LengthUnit lengthUnit;
 
 	public Length(float amount, LengthUnit lengthUnit) {
 		this.amount = amount;
