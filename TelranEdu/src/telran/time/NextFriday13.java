@@ -17,16 +17,16 @@ public class NextFriday13 implements TemporalAdjuster {
 	@Override
 	public Temporal adjustInto(Temporal temporal) {
 	
-		if(!(temporal.isSupported(ChronoUnit.DAYS) && temporal.isSupported(ChronoUnit.MONTHS))) {
+		if(!(temporal.isSupported(ChronoUnit.MONTHS) && temporal.isSupported(ChronoField.DAY_OF_MONTH))) {
 			throw new UnsupportedTemporalTypeException("Temporal is not supported Chrono unit month or year");
 		}
 		
-		do {
-			temporal = temporal.plus(1, ChronoUnit.DAYS);
-		} while (temporal.get(ChronoField.DAY_OF_MONTH) != 13);
-		
-		
-		while (temporal.get(ChronoField.DAY_OF_WEEK) != 5) {
+		if(temporal.get(ChronoField.DAY_OF_MONTH) >= 13) {
+			temporal = temporal.plus(1, ChronoUnit.MONTHS);
+		}
+		temporal = temporal.with(ChronoField.DAY_OF_MONTH, 13);
+
+		while (temporal.get(ChronoField.DAY_OF_WEEK) != DayOfWeek.FRIDAY.getValue()) {
 			temporal = temporal.plus(1, ChronoUnit.MONTHS);
 		}
 		
