@@ -1,9 +1,12 @@
-package telran.interviews;
+package telran.interviews.tests;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import telran.interviews.StackInt;
+
 import java.util.*;
 
 class ListTests {
@@ -26,6 +29,7 @@ List<Integer> mutableList;
 		assertThrowsExactly(UnsupportedOperationException.class,
 				() -> immutableList.remove(0));
 		List<Integer> subList = mutableList.subList(2, 5);
+		
 		subList.clear();
 		Integer[] expected1 = {10, -30, 17, 23};
 		assertArrayEquals(expected1, mutableList.toArray(Integer[]::new));
