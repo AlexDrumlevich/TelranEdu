@@ -18,7 +18,7 @@ import telran.util.ArrayList;
 
 public class MyArray<T> {
 
-	HashMap<Integer, NodeElement<T>> innerMap;
+	private HashMap<Integer, NodeElement<T>> innerMap;
 	private int size;
 	private T commonValue;
 	private String id = null;
