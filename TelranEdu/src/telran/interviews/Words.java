@@ -11,14 +11,8 @@ public class Words {
 	TreeSet<String> innerTreeSet;
 
 	public	Words() {
-		innerTreeSet = new TreeSet<>(new Comparator<String>() {
-
-			@Override
-			public int compare(String o1, String o2) {
-				return o1.toLowerCase().compareTo(o2.toLowerCase());
-			}
-		});
-	}
+		innerTreeSet = new TreeSet<>((o1, o2) -> o1.toLowerCase().compareTo(o2.toLowerCase()));
+	}	
 	
 	//TODO
 	/**
