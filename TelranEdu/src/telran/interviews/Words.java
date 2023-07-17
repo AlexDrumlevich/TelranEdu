@@ -35,11 +35,12 @@ public class Words {
 		innerTreeSet.stream().forEach(e -> {
 			StringBuilder regexBuilder = new StringBuilder();
 			//add each symbol to [] to exclude action of metasymbols
-			prefix.toLowerCase().chars().forEach(charInt -> regexBuilder.append("[").append((char) charInt).append("]"));
+			//			//replace "-" for "\\-" to exclude action of metasymbol "-" inside [ ]
+			prefix.toLowerCase().chars().forEach(charInt -> regexBuilder.append("[").append((char) charInt == '-' ? "\\-" : (char) charInt).append("]"));
 			regexBuilder.append(".*");
 	
-			//replace "-" for "\\-" to exclude action of metasymbol "-" inside [ ]
-			if(e.toLowerCase().matches(regexBuilder.toString().replaceAll("-", "\\-"))) {
+
+			if(e.toLowerCase().matches(regexBuilder.toString())) {
 				list.add(e);
 			}
 		});
