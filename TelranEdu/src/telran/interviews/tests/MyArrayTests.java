@@ -36,9 +36,9 @@ class MyArrayTests {
 			}
 			assertEquals(OTHER_VALUE, array.get(0));
 			assertEquals(OTHER_VALUE, array.get(limit));
-			array.setAll(OTHER_VALUE);
+			array.setAll(VALUE);
 			for(int i = 0; i < LENGTH; i++) {
-				assertEquals(OTHER_VALUE, array.get(i));
+				assertEquals(VALUE, array.get(i));
 			}
 			
 		}

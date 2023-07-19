@@ -9,7 +9,7 @@ import telran.interviews.Connection;
 import telran.interviews.ConnectionsPool;
 import telran.interviews.ConnectionsPoolImpl;
 
-class ConnectionsPoolImplTest {
+class ConnectionsPoolTests {
 
 	private static int CONNECTIONS_POOL_LIMIT = 5;
 	ConnectionsPool pool;

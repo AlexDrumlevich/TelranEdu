@@ -1,23 +1,37 @@
 package telran.interviews;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 public class ConnectionsPoolImpl implements ConnectionsPool {
 
-
-//TODO
-	int limit; //limit of connections number in a pool
+	
+	private LinkedHashMap <Integer, Connection> mapConnections;
+	private int limit; //limit of connections number in a pool
 	public ConnectionsPoolImpl(int limit) {
+		if(limit < 1) {
+			throw new IllegalArgumentException("limin must be positive");
+		}
 		this.limit = limit;
+		mapConnections = new LinkedHashMap<>(limit, 0.75f, true) {
+			protected boolean removeEldestEntry(Map.Entry<Integer, Connection> eldest) {
+				return size() > limit;
+			}
+		};
 	}
+	
 	@Override
 	public boolean addConnection(Connection connection) {
-		// TODO Auto-generated method stub
-		return false;
+		if(connection == null) {
+			throw new IllegalArgumentException("Connection could not be Null");
+		}
+		Connection resultConnection = mapConnections.putIfAbsent(connection.id, connection);
+		return resultConnection == null;
 	}
 
 	@Override
 	public Connection getConnection(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		return mapConnections.get(id);
 	}
 
 	

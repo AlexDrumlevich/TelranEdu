@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 import telran.interviews.MultiCounters;
 import telran.interviews.MultiCountersImpl;
 
-class MultiCountersTest {
+class MultiCountersTests {
 MultiCounters multiCounters;
 @BeforeEach
 void setUp() {
