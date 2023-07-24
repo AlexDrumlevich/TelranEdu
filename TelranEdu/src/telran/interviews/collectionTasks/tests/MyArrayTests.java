@@ -1,11 +1,11 @@
-package telran.interviews.tests;
+package telran.interviews.collectionTasks.tests;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import telran.interviews.MyArray;
+import telran.interviews.collectionTasks.MyArray;
 
 class MyArrayTests {
 
@@ -45,8 +45,8 @@ class MyArrayTests {
 		
 		@Test
 		void testExceptions() {
-			assertThrows(ArrayIndexOutOfBoundsException.class, () -> array.get(-1));
-			assertThrows(ArrayIndexOutOfBoundsException.class, () -> array.get(LENGTH));
+			assertThrows(IndexOutOfBoundsException.class, () -> array.get(-1));
+			assertThrows(IndexOutOfBoundsException.class, () -> array.get(LENGTH));
 			assertThrows(IllegalArgumentException.class, () -> new MyArray<>(-1));
 
 		}

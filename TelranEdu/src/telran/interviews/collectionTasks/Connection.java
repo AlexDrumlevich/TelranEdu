@@ -1,4 +1,4 @@
-package telran.interviews;
+package telran.interviews.collectionTasks;
 
 public class Connection {
 	public int id;

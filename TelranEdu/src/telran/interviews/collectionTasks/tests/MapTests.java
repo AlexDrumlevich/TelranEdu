@@ -1,4 +1,4 @@
-package telran.interviews.tests;
+package telran.interviews.collectionTasks.tests;
 
 import static org.junit.jupiter.api.Assertions.*;
 

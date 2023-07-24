@@ -1,4 +1,4 @@
-package telran.interviews;
+package telran.interviews.collectionTasks;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -21,6 +21,8 @@ public class MultiCountersImpl implements MultiCounters {
 		Integer count = mapCountByObject.merge(item, 1, (oldValue, newValue) -> oldValue + newValue);
 		
 		//add to set of ObjectsByCount
+		mapObjectsByCount.computeIfAbsent(count, k -> new HashSet<>()).add(item);
+		 /*
 		Set<Object> setObjects = mapObjectsByCount.get(count);
 		if(setObjects == null) {
 			//put set of ObjectsByCount to mapObjectsByCount
@@ -28,9 +30,10 @@ public class MultiCountersImpl implements MultiCounters {
 			mapObjectsByCount.put(count, setObjects);
 		}
 		setObjects.add(item);
+		*/
 		
 		//remove obj from set of ObjectsByCount by count - 1 key
-		if(count - 1 > 0) {
+		if(count > 1) {
 			removeFromMapObjectsByAmount(item, count - 1);
 		} 
 		return count;

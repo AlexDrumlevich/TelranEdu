@@ -1,4 +1,4 @@
-package telran.interviews;
+package telran.interviews.collectionTasks;
 
 import java.util.Arrays;
 import java.util.HashMap;

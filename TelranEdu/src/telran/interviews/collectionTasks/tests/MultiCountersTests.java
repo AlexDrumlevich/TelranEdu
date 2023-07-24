@@ -1,4 +1,4 @@
-package telran.interviews.tests;
+package telran.interviews.collectionTasks.tests;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -8,8 +8,8 @@ import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import telran.interviews.MultiCounters;
-import telran.interviews.MultiCountersImpl;
+import telran.interviews.collectionTasks.MultiCounters;
+import telran.interviews.collectionTasks.MultiCountersImpl;
 
 class MultiCountersTests {
 MultiCounters multiCounters;
@@ -60,6 +60,8 @@ void setUp() {
 		runArraySet(new Object[0], multiCounters.getMaxItems());
 		
 	}
+	
+	
 	private void runArraySet(Object[] expected, Set<Object> maxItems) {
 		assertEquals(expected.length, maxItems.size());
 		for(Object item: expected) {

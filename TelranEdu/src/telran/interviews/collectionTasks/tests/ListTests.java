@@ -1,11 +1,11 @@
-package telran.interviews.tests;
+package telran.interviews.collectionTasks.tests;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import telran.interviews.StackInt;
+import telran.interviews.collectionTasks.StackInt;
 
 import java.util.*;
 

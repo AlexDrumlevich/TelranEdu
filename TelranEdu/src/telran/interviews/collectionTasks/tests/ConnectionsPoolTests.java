@@ -1,13 +1,13 @@
-package telran.interviews.tests;
+package telran.interviews.collectionTasks.tests;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import telran.interviews.Connection;
-import telran.interviews.ConnectionsPool;
-import telran.interviews.ConnectionsPoolImpl;
+import telran.interviews.collectionTasks.Connection;
+import telran.interviews.collectionTasks.ConnectionsPool;
+import telran.interviews.collectionTasks.ConnectionsPoolImpl;
 
 class ConnectionsPoolTests {
 
