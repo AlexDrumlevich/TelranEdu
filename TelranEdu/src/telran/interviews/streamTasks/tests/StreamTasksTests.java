@@ -5,11 +5,9 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-
 import telran.interviews.streamTasks.StreamTasks;
 
-
-class StreamTasksTests {
+;class StreamTasksTests {
 
 	@BeforeEach
 	void setUp() throws Exception {
@@ -25,10 +23,14 @@ class StreamTasksTests {
 	void displayOddEvenGroupingTest() {
 		StreamTasks.displayOddEvenGrouping(20);
 	}
-	
 	@Test
-	void printDigitStatisticsTest() {
-		StreamTasks.printDigitStatistics();
+	void displayDigitStatisticsTest() {
+		StreamTasks.displayDigitStatistics();
+	}
+	@Test
+	void displayPersonsMap() {
+		System.out.println(StreamTasks.getRandomPersonsMap(5));
+		
 	}
 
 }
