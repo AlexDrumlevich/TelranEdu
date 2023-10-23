@@ -1,4 +1,4 @@
-package telran.perfonance;
+package telran.perfomance;
 
 public class JoinStringsPerfomanceTest extends PerfomanceTest {
 

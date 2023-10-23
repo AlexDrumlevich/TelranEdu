@@ -1,4 +1,4 @@
-package telran.perfonance;
+package telran.perfomance;
 
 public class JoinStringsBuilderImpl implements JoinStrings {
 
